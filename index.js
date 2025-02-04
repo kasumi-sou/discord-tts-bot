@@ -5,7 +5,14 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config.json");
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+ 		GatewayIntentBits.GuildMembers,
+	],
+});
 
 client.commands = new Collection();
 
@@ -47,6 +54,20 @@ const statusFiles = fs.readdirSync(statusPath).filter(file => file.endsWith(".js
 
 for (const file of statusFiles) {
 	const filePath = path.join(statusPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	}
+	else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
+const replyPath = path.join(__dirname, "reply");
+const replyFiles = fs.readdirSync(replyPath).filter(file => file.endsWith(".js"));
+
+for (const file of replyFiles) {
+	const filePath = path.join(replyPath, file);
 	const event = require(filePath);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
