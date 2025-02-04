@@ -42,5 +42,19 @@ for (const file of eventFiles) {
 	}
 }
 
+const statusPath = path.join(__dirname, "status");
+const statusFiles = fs.readdirSync(statusPath).filter(file => file.endsWith(".js"));
+
+for (const file of statusFiles) {
+	const filePath = path.join(statusPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	}
+	else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
 // Log in to Discord with your client's token
 client.login(token);
