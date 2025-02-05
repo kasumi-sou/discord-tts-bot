@@ -79,6 +79,7 @@ for (const file of replyFiles) {
 	}
 }
 
+/*
 const voicePath = path.join(__dirname, "voice");
 const voiceFiles = fs.readdirSync(voicePath).filter(file => file.endsWith(".js"));
 
@@ -92,7 +93,7 @@ for (const file of voiceFiles) {
 		connection.on(event.name, (...args) => event.execute(...args));
 	}
 }
-
+*/
 
 // Log in to Discord with your client's token
 client.login(token);
