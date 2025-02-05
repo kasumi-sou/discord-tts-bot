@@ -13,6 +13,7 @@ module.exports = {
 		const guild = interaction.guild;
 		const member = await guild.members.fetch(interaction.member.id);
 		const channel = member.voice.channel;
+		const connectedChannel = interaction.guild.members.me.voice.channel;
 		if (!channel) {
 			return interaction.reply(":cold_sweat: VCに参加してから実行してください");
 		}
@@ -21,7 +22,7 @@ module.exports = {
 		}
 		else if (connection) {
 			connection.destroy();
-			return interaction.reply(":wave: VCから切断しました!");
+			return interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}
 		else {return await interaction.reply("An unexpected error occurred.");}
 	},
