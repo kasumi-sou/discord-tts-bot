@@ -79,14 +79,8 @@ for (const file of replyFiles) {
 	}
 }
 
-
-try {
-	const event = require("./voice/tts/readMessages.js");
-	client.on(event.name, (...args) => event.execute(...args));
-}
-catch (e) {
-	console.error(e);
-}
+const event = require("./voice/tts/readMessages");
+client.on(event.name, (...args) => event.execute(...args));
 
 // Log in to Discord with your client's token
 client.login(token);
