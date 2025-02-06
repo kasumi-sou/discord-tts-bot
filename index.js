@@ -65,22 +65,10 @@ for (const file of statusFiles) {
 	}
 }
 
-const replyPath = path.join(__dirname, "reply");
-const replyFiles = fs.readdirSync(replyPath).filter(file => file.endsWith(".js"));
 
-for (const file of replyFiles) {
-	const filePath = path.join(replyPath, file);
-	const event = require(filePath);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	}
-	else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
-}
+const voice = require("./voice/tts/readMessages");
+client.on(voice.name, (...args) => voice.execute(...args));
 
-const event = require("./voice/tts/readMessages");
-client.on(event.name, (...args) => event.execute(...args));
-
+// const stateUpdate
 // Log in to Discord with your client's token
 client.login(token);
