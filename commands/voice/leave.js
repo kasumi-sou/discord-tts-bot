@@ -24,6 +24,10 @@ module.exports = {
 			connection.destroy();
 			return interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}
-		else {return await interaction.reply("An unexpected error occurred.");}
+		else {
+			await interaction.reply("An unexpected error occurred.");
+			console.error("An unexpected error occurred.");
+			return;
+		}
 	},
 };
