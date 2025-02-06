@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { joinVoiceChannel } = require("@discordjs/voice");
+const channelId = require("../../data");
 module.exports = {
 	name: Events.InteractionCreate,
 	once: false,
@@ -25,6 +26,7 @@ module.exports = {
 				selfMute: false,
 			});
 			await interaction.reply(`:partying_face: **${channel.name}** に参加しました！`);
+			channelId.set(guild.id, interaction.channelId);
 		}
 		else {
 			await interaction.reply("An unexpected error occurred.");

@@ -2,6 +2,7 @@ const { Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 const owata = require("../reply/owata");
 const readMessages = require("../voice/tts/readMessages");
+const data = require("../data");
 
 module.exports = {
 	name: Events.MessageCreate,
@@ -13,10 +14,10 @@ module.exports = {
 			}
 			await owata(message);
 			const connection = getVoiceConnection(message.guildId);
-			if (connection) {
+			if (!connection || !data.get(message.guildId)) { return; }
+			else if (connection) {
 				await readMessages(message);
 			}
-			else if (!connection) { return; }
 			else { console.error("An unexpected error occurred."); }
 		}
 		catch (e) {console.error(e);};

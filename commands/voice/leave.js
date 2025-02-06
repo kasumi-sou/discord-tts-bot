@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
+const data = require("../../data");
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -17,17 +18,17 @@ module.exports = {
 		if (!channel) {
 			return interaction.reply(":cold_sweat: VCに参加してから実行してください");
 		}
-		else if (!connection) {
+		else if (!connection || !data.get(guild.id)) {
 			return interaction.reply(":thinking: BOTは現在VCに参加していません");
 		}
 		else if (connection) {
+			data.delete(guild.id);
 			connection.destroy();
-			return interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
+			interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}
 		else {
 			await interaction.reply("An unexpected error occurred.");
 			console.error("An unexpected error occurred.");
-			return;
 		}
 	},
 };
