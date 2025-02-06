@@ -7,15 +7,18 @@ module.exports = {
 	name: Events.MessageCreate,
 	once: false,
 	async execute(message) {
-		if (message.author.bot) {
-			return;
+		try {
+			if (message.author.bot) {
+				return;
+			}
+			await owata(message);
+			const connection = getVoiceConnection(message.guildId);
+			if (connection) {
+				await readMessages(message);
+			}
+			else if (!connection) { return; }
+			else { console.error("An unexpected error occurred."); }
 		}
-		await owata(message);
-		const connection = getVoiceConnection(message.guildId);
-		if (connection) {
-			await readMessages(message);
-		}
-		else if (!connection) { return; }
-		else { console.error("An unexpected error occurred."); }
+		catch (e) {console.error(e);};
 	},
 };
