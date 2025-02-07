@@ -1,3 +1,4 @@
+const generateAudio = require("./generateAudio");
 module.exports = async function readMessages(message) {
 	const soundPath = `../sounds/${message.author.id}.wav`;
 	const default_voice = "6";
