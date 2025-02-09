@@ -1,10 +1,11 @@
 const fs = require("node:fs");
 const { default: axios } = require("axios");
-const rpc = axios.create({ baseURL: "http://voicevox-engine:50021/", proxy: false });
+const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
 
 
 module.exports = async function readMessages(message) {
-	const soundPath = `../sounds/${message.author.id}.wav`;
+	// const soundPath = `sounds/${message.author.id}.wav`;
+	const soundPath = `sounds/${message.author.id}.wav`;
 	const default_voice = "6";
 	const VoiceMap = new Map;
 	let voice = VoiceMap.get(message.author.id);
@@ -28,10 +29,11 @@ module.exports = async function readMessages(message) {
 			responseType: "arraybuffer",
 			headers: {
 				"accept": "audio/wav",
-				"Content-Type": "appication/json",
+				"Content-Type": "application/json",
 			},
 		});
 
 		fs.writeFileSync(filePath, new Buffer.from(synthesis.data), "binary");
+		return filePath;
 	}
 };
