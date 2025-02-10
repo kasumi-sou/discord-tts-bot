@@ -19,7 +19,7 @@ module.exports = {
 			return interaction.reply(`:shaking_face: 既に **${connectedChannel.name}** に参加しています`);
 		}
 		else if (!connectedChannel) {
-			const connection = joinVoiceChannel({
+			joinVoiceChannel({
 				guildId: guild.id,
 				channelId: channel.id,
 				adapterCreator: guild.voiceAdapterCreator,
