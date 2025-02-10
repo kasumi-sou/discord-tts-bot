@@ -34,6 +34,7 @@ module.exports = async function readMessages(message) {
 		});
 
 		fs.writeFileSync(filePath, new Buffer.from(synthesis.data), "binary");
-		return filePath;
+		// return filePath;
 	}
+	return soundPath;
 };

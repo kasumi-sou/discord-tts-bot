@@ -1,7 +1,7 @@
 const generateAudio = require("./generateAudio");
 const playVoice = require("./playVoice");
 
-module.exports = function(message) {
-	const filePath = generateAudio(message);
+module.exports = async function(message) {
+	const filePath = await generateAudio(message);
 	playVoice(filePath, message.guild.id);
 };
