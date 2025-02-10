@@ -6,14 +6,14 @@ const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
 module.exports = async function readMessages(message) {
 	// const soundPath = `sounds/${message.author.id}.wav`;
 	const soundPath = `sounds/${message.id}.wav`;
-	const defaultVoice = "6";
+	const defaultVoice = "14";
 	const VoiceMap = new Map;
 	let voice = VoiceMap.get(message.author.id);
 	if (!voice) {
 		voice = defaultVoice;
 	}
-	// const convMessage = convertMessage(message.cleanContent);
-	const convMessage = message;
+	const convMessage = message.cleanContent;
+	// const convMessage = message;
 	await generateAudio(convMessage, soundPath, voice);
 	// await play(convMessage, soundPath);
 	console.log(message.cleanContent);
