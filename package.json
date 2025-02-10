@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@discordjs/voice": "^0.18.0",
+    "@mtripg6666tdr/async-lock": "^1.1.0",
     "axios": "^1.7.9",
     "discord.js": "^14.17.3",
     "libsodium-wrappers": "^0.7.15"
