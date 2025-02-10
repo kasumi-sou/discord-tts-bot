@@ -66,8 +66,8 @@ for (const file of statusFiles) {
 }
 
 
-const voice = require("./voice/tts/readMessages");
-client.on(voice.name, (...args) => voice.execute(...args));
+// const voice = require("./voice/tts/readMessages");
+// client.on(voice.name, (...args) => voice.execute(...args));
 
 // const stateUpdate
 // Log in to Discord with your client's token
