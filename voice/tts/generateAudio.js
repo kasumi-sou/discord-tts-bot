@@ -5,7 +5,7 @@ const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
 
 module.exports = async function readMessages(message) {
 	// const soundPath = `sounds/${message.author.id}.wav`;
-	const soundPath = `sounds/${message.author.id}.wav`;
+	const soundPath = `sounds/${message.id}.wav`;
 	const default_voice = "6";
 	const VoiceMap = new Map;
 	let voice = VoiceMap.get(message.author.id);
