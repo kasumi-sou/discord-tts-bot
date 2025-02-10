@@ -15,10 +15,11 @@ module.exports = {
 			}
 			await owata(message);
 			const connection = getVoiceConnection(message.guildId);
-			if (!connection || !data.get(message.guildId)) { return; }
+			if (!connection || !data.has(message.guildId)) { return; }
 			else if (connection) {
-				// await readMessages(message);
-				await playAudio(message);
+				if (message.channel.id === data.get(message.guildId)) {
+				  await playAudio(message);
+				}
 			}
 			else { console.error("An unexpected error occurred."); }
 		}

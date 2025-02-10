@@ -18,7 +18,7 @@ module.exports = {
 		if (!channel) {
 			return interaction.reply(":cold_sweat: VCに参加してから実行してください");
 		}
-		else if (!connection || !data.get(guild.id)) {
+		else if (!connection || !data.has(guild.id)) {
 			return interaction.reply(":thinking: BOTは現在VCに参加していません");
 		}
 		else if (connection) {
