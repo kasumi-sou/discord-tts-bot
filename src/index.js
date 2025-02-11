@@ -2,8 +2,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior, generateDependencyReport } = require("@discordjs/voice");
-const { token } = require("./config.json");
+const { token } = require("../config.json");
 
 // Create a new client instance
 const client = new Client({
