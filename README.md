@@ -14,20 +14,26 @@ node.js, discord.js, docker, VOICEVOX 等を使用します
   - `/google` : Google検索をします(半実装)
 
 ## How to install
-1. [Node.js](https://nodejs.org/)をインストール(動作確認済: v22.13.1)
-2. ライブラリをインストール
+1. FFmpegをインストール
+
+    (winget経由の場合)
+    ```
+    winget install Gyan.FFmpeg
+    ```
+2. [Node.js](https://nodejs.org/)をインストール(動作確認済: v22.13.1)
+3. ライブラリをインストール
    ```
    npm i
    ```
-3. `config.json`を作成
+4. `config.json`を作成
     ```
     {
 	  "token": "BOTのtoken",
       "clientId": "BOTのclientId"
     }
     ```
-4. [docker](https://www.docker.com/)をインストール
-5. docker上でVOICEVOXをインストール,サーバ実行
+5. [docker](https://www.docker.com/)をインストール
+6. docker上でVOICEVOXをインストール,サーバ実行
 
     CPU
     ```
@@ -39,7 +45,7 @@ node.js, discord.js, docker, VOICEVOX 等を使用します
     docker pull voicevox/voicevox_engine:nvidia-latest
     docker run --rm --gpus all -p '127.0.0.1:50021:50021' voicevox/voicevox_engine:nvidia-latest
     ```
-6. 実行
+7. 実行
     ```
     node src
     ```
