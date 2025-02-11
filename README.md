@@ -19,8 +19,15 @@ node.js, discord.js, docker, VOICEVOX 等を使用します
    ```
    npm i
    ```
-3. [docker](https://www.docker.com/)をインストール
-4. docker上でVOICEVOXをインストール,サーバ実行
+3. `config.json`を作成
+    ```
+    {
+	  "token": "BOTのtoken",
+      "clientId": "BOTのclientId"
+    }
+    ```
+4. [docker](https://www.docker.com/)をインストール
+5. docker上でVOICEVOXをインストール,サーバ実行
 
     CPU
     ```
@@ -32,9 +39,9 @@ node.js, discord.js, docker, VOICEVOX 等を使用します
     docker pull voicevox/voicevox_engine:nvidia-latest
     docker run --rm --gpus all -p '127.0.0.1:50021:50021' voicevox/voicevox_engine:nvidia-latest
     ```
-5. 実行
+6. 実行
     ```
-    node index.js
+    node src
     ```
 
 ## Issue
