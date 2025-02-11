@@ -3,7 +3,7 @@ const { default: axios } = require("axios");
 const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
 
 
-module.exports = async function readMessages(message) {
+module.exports = async function readMessages(message, messageContent) {
 	// const soundPath = `sounds/${message.author.id}.wav`;
 	const soundPath = `sounds/${message.id}.wav`;
 	const defaultVoice = "14";
@@ -12,11 +12,11 @@ module.exports = async function readMessages(message) {
 	if (!voice) {
 		voice = defaultVoice;
 	}
-	const convMessage = message.cleanContent;
+
 	// const convMessage = message;
-	await generateAudio(convMessage, soundPath, voice);
+	await generateAudio(messageContent, soundPath, voice);
 	// await play(convMessage, soundPath);
-	console.log(message.cleanContent);
+	console.log(messageContent);
 
 	// ここまで 旧readMessages.jsの内容
 	// ここから 旧generateAudio.jsの内容
