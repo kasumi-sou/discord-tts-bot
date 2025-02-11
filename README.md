@@ -44,6 +44,12 @@ node.js, discord.js, docker, VOICEVOX 等を使用します
     node src
     ```
 
+#### 注意
+discord developer portalのBOTの設定ページ内で下記の画像のように設定してください
+
+でないと正常に動作しません
+![image](https://github.com/user-attachments/assets/42b83ac7-f2f8-4f5d-8569-af75ad0f9b50)
+
 ## Issue
   なんかあればissuesなりPull requestなり送ってください
 
