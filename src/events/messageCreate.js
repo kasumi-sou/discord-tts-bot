@@ -1,6 +1,6 @@
 const { Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
-const owata = require("../reply/owata");
+const reply = require("../reply/");
 // const readMessages = require("../voice/tts/readMessages");
 const playAudio = require("../voice/tts/");
 const data = require("../data");
@@ -13,7 +13,7 @@ module.exports = {
 			if (message.author.bot) {
 				return;
 			}
-			await owata(message);
+			await reply(message);
 			const connection = getVoiceConnection(message.guildId);
 			if (!connection || !data.has(message.guildId)) { return; }
 			else if (connection) {
