@@ -15,6 +15,7 @@ function getLockerByGuildId(guildId) {
 module.exports = async function play(filePath, guildId) {
 	await lock(getLockerByGuildId(guildId), async () => {
 		const connection = getVoiceConnection(guildId);
+		if (!connection) { return; }
 		const resource = createAudioResource(filePath, { inputType: StreamType.Arbitrary });
 		const player = createAudioPlayer({
 			behaviors: {
