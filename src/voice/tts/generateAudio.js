@@ -22,10 +22,15 @@ module.exports = async function readMessages(message, messageContent) {
 	// ここから 旧generateAudio.jsの内容
 	async function generateAudio(text, filePath, speakerName) {
 		const audioQuery = await rpc.post(`audio_query?text=${encodeURI(text)}&speaker=${speakerName}`, {
-			headers: { "accept": "application/json" },
+			headers: {
+				"outputStereo": "false",
+			},
 		});
 
-		const synthesis = await rpc.post(`synthesis?speaker=${speakerName}`, JSON.stringify(audioQuery.data), {
+		const queryData = audioQuery.data;
+		queryData.outputStereo = false;
+
+		const synthesis = await rpc.post(`synthesis?speaker=${speakerName}`, JSON.stringify(queryData), {
 			responseType: "arraybuffer",
 			headers: {
 				"accept": "audio/wav",
