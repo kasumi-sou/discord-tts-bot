@@ -18,6 +18,9 @@ module.exports = {
 			if (!connection || !data.has(message.guildId)) { return; }
 			else if (connection) {
 				if (message.channel.id === data.get(message.guildId)) {
+					if (message.content.startsWith("'")) {
+						return;
+					}
 				  await playAudio(message);
 				}
 			}

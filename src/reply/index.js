@@ -1,7 +1,7 @@
 const owata = require("./owata.js");
-const kenkou = require("./replyImages.js");
+const replyImages = require("./replyImages.js");
 
 module.exports = async function(message) {
-	await kenkou(message);
+	await replyImages(message);
 	await owata(message);
 };
