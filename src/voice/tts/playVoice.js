@@ -1,4 +1,4 @@
-const { createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior, getVoiceConnection, entersState, AudioPlayerStatus } = require("@discordjs/voice");
+const { createAudioPlayer, NoSubscriberBehavior, getVoiceConnection, entersState, AudioPlayerStatus } = require("@discordjs/voice");
 const { LockObj, lock } = require("@mtripg6666tdr/async-lock");
 // const locker = new LockObj();
 const guildLocker = new Map();
@@ -12,18 +12,18 @@ function getLockerByGuildId(guildId) {
 		return locker;
 	}
 }
-module.exports = async function play(filePath, guildId) {
+module.exports = async function play(audioResource, guildId) {
 	await lock(getLockerByGuildId(guildId), async () => {
 		const connection = getVoiceConnection(guildId);
 		if (!connection) { return; }
-		const resource = createAudioResource(filePath, { inputType: StreamType.Arbitrary });
+		// const resource = createAudioResource(AudioResource, { inputType: StreamType.Arbitrary });
 		const player = createAudioPlayer({
 			behaviors: {
 				noSubscriber: NoSubscriberBehavior.Pause,
 			},
 		});
 		connection.subscribe(player);
-		player.play(resource);
+		player.play(audioResource);
 		await entersState(player, AudioPlayerStatus.Idle, 30000);
 	});
 };
