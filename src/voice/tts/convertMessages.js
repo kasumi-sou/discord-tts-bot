@@ -48,5 +48,8 @@ module.exports = function(messageContent) {
 	if (messageContent.includes("#")) {
 		return messageContent.replaceAll("#", "");
 	}
+	if (messageContent.includes("(ΦωΦ)ﾎﾎｫ…")) {
+		return "ほほぉ";
+	}
 	else {return messageContent;}
 };
