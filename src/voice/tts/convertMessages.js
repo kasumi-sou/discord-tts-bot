@@ -1,5 +1,8 @@
 module.exports = function(messageContent) {
 	messageContent = messageContent.toLowerCase();
+	if (messageContent.indexOf("||") !== messageContent.lastIndexOf("||")) {
+		return "ネタバレ";
+	}
 	if (messageContent.includes("```json")) {
 		return "ジェイソンのコード";
 	}
