@@ -1,7 +1,9 @@
+const romajiConv = require("@koozaki/romaji-conv");
+
 module.exports = function(messageContent) {
 	messageContent = messageContent.toLowerCase();
 
-	if (messageContent.match(/^(([lx]?[kstnhmyrwdpfjzvcb]?[yhs]?[aiueo])|n|nn)+$/)) {
+	if (messageContent.match(/^(([lx]?[kstnhmyrwdpfjzvcb]?[yhs]?[aiueo])|n|nn|（）|\(\)|？|\?)+[wｗ]*$/)) {
 		messageContent = romajiToHiragana(messageContent);
 	}
 
@@ -60,6 +62,7 @@ module.exports = function(messageContent) {
 };
 
 function romajiToHiragana(romaji) {
+<<<<<<< HEAD
 	let result = romaji;
 	[
 		["a", "あ"],
@@ -202,4 +205,8 @@ function romajiToHiragana(romaji) {
 		});
 
 	return result.match(/[a-z]+/) ? romaji : result;
+=======
+	const result = romajiConv(romaji).toHiragana();
+	return result.match(/[a-vxyz]+/) ? romaji : result;
+>>>>>>> 547ddbdcbebbda178025df34161ad8fb3e567dc0
 }
