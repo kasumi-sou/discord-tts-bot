@@ -1,11 +1,21 @@
 const romajiConv = require("@koozaki/romaji-conv");
+/**
+ * convert message to suitable for reading
+ * @param {import("discord.js").Message} message input message
+ * @returns {string} return message
+ */
 
-module.exports = function(messageContent) {
-	messageContent = messageContent.toLowerCase();
+module.exports = function(message) {
+	let messageContent = message.cleanContent.toLowerCase();
 
 	if (messageContent.match(/^(([lx]?[kstnhmyrwdpfjzvcb]?[yhs]?[aiueo])|n|nn|（）|\(\)|？|\?)+[wｗ]*$/)) {
 		messageContent = romajiToHiragana(messageContent);
 	}
+
+	if (message.attachments.first()) {
+		messageContent += "。添付ファイル";
+	}
+
 
 	if (messageContent.indexOf("||") !== messageContent.lastIndexOf("||")) {
 		return "ネタバレ";
