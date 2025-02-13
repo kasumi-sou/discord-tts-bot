@@ -37,7 +37,7 @@ module.exports = function(messageContent) {
 	if (messageContent.includes("`") || messageContent.includes("```")) {
 		return "コードブロック";
 	}
-	if (messageContent.includes("http")) {
+	if (messageContent.includes("http://") || messageContent.includes("https;//")) {
 		if (messageContent.includes("youtube")) {
 			return "ユーチューブのURL";
 		}
