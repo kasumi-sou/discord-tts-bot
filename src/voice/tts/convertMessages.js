@@ -8,7 +8,7 @@ const romajiConv = require("@koozaki/romaji-conv");
 module.exports = function(message) {
 	let messageContent = message.cleanContent.toLowerCase();
 
-	if (messageContent.match(/^(([lx]?(([kstnhmyrwdpfjzvcb])\4?)?[yhs]?[aiueo])|n|nn|（）|\(\)|？|\?)+[wｗ]*$/)) {
+	if (messageContent.match(/^(([lx]?(([kstnhmyrwdpfjzvcbg])\4?)?[yhs]?[aiueo])|n|nn|（）|\(\)|？|\?)+[wｗ]*$/)) {
 		messageContent = romajiToHiragana(messageContent);
 	}
 
