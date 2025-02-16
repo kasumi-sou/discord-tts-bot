@@ -3,19 +3,19 @@ const { default: axios } = require("axios");
 const { createAudioResource } = require("@discordjs/voice");
 const { Readable } = require("node:stream");
 const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
+const { user:styeleId } = require("../../data");
 
 
 module.exports = async function readMessages(message, messageContent) {
 	// const soundPath = `sounds/${message.author.id}.wav`;
 	// const soundPath = `sounds/${message.id}.wav`;
 	// const defaultVoice = "14";
-	const defaultVoice = "14";
-	const VoiceMap = new Map;
-	let voice = VoiceMap.get(message.author.id);
+	const defaultVoice = "6";
+	let voice = styeleId.get(message.author.id);
 	if (!voice) {
 		voice = defaultVoice;
 	}
-
+	// console.log(voice);
 	// const convMessage = message;
 	const resource = await generateAudio(messageContent, voice);
 	// await play(convMessage, soundPath);
