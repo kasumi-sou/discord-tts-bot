@@ -32,6 +32,12 @@ module.exports = {
 			fs.writeFileSync(guildPath, JSON.stringify(guildArray), "utf-8");
 			return result;
 		},
+		delete(key) {
+			const result = guildMap.delete(key);
+			const guildArray = Array.from(guildMap.entries());
+			fs.writeFileSync(guildPath, JSON.stringify(guildArray), "utf-8");
+			return result;
+		},
 	},
 	user: {
 		get(key) {
