@@ -1,6 +1,7 @@
 const { Events } = require("discord.js");
 const { guild: guildData } = require("../data");
 const { playText } = require("../voice/tts");
+const { getVoiceConnection } = require("@discordjs/voice");
 
 module.exports = {
 	name: Events.VoiceStateUpdate,
@@ -20,19 +21,38 @@ module.exports = {
 			const vcChannel = newState.guild.members.me.voice.channel;
 			if (!vcChannel) {return;}
 			if (newState.channelId === vcChannel.id) {
-				await playText(`${newState.member.displayName}が${vcChannel.name}に参加しました！`, guildId);
+				await playText(`${newState.member.displayName}が${vcChannel.name}に参加しました`, guildId);
 			}
 			else if (oldState.channelId === vcChannel.id) {
-				await playText(`${oldState.member.displayName}が${vcChannel.name}から退出しました！`, guildId);
+				const memberCount = () => oldState.channel.members.size;
+				if (memberCount() === 1) {
+					await textChannel.send(`:lying_face: **${vcChannel.name}** から誰もいなくなりました。\n5分後に誰もボイスチャンネルに接続していない場合、自動的に退出します。`);
+					setTimeout(async () => {
+						if (memberCount() > 1) {
+							return;
+						}
+						else {
+							const connection = getVoiceConnection(guildId);
+							await textChannel.send(`:wave: **${vcChannel.name}** から誰もいなくなってから5分経過したため退出しました。`);
+							guildData.delete(guildId);
+							connection.destroy();
+						}
+					// eslint-disable-next-line no-inline-comments
+					}, 1000 * 60 /* 」1分*/ * 5 /* 」5分*/);
+
+				}
+				else {
+					await playText(`${oldState.member.displayName}が${vcChannel.name}から退出しました`, guildId);
+				}
 			}
-		}
-		if (oldState.channel && !newState.channel) {
-			const connectedChannelNameOld = oldState.channel.name;
-			if (newState.id !== oldState.client.user.id) return;
-			if (!newState.channelId) {
-				if (guildData.has(guildId)) {
-					await textChannel.send(`:pleading_face:  **${connectedChannelNameOld}** から強制的に切断されました`);
-					guildData.delete(guildId);
+			if (oldState.channel && !newState.channel) {
+				const connectedChannelNameOld = oldState.channel.name;
+				if (newState.id !== oldState.client.user.id) return;
+				if (!newState.channelId) {
+					if (guildData.has(guildId)) {
+						await textChannel.send(`:pleading_face:  **${connectedChannelNameOld}** から強制的に切断されました。`);
+						guildData.delete(guildId);
+					}
 				}
 			}
 		}
