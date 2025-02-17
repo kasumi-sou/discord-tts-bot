@@ -7,7 +7,7 @@ module.exports = {
 	once: false,
 	data: new SlashCommandBuilder()
 		.setName("leave")
-		.setDescription("VCから退出します"),
+		.setDescription("VCから退出します。"),
 
 	async execute(interaction) {
 		const connection = getVoiceConnection(interaction.guildId);
@@ -16,10 +16,10 @@ module.exports = {
 		const channel = member.voice.channel;
 		const connectedChannel = interaction.guild.members.me.voice.channel;
 		if (!channel) {
-			return interaction.reply(":cold_sweat: VCに参加してから実行してください");
+			return interaction.reply(":cold_sweat: VCに参加してから実行してください。");
 		}
 		else if (!connection || !guildData.has(guild.id)) {
-			return interaction.reply(":thinking: BOTは現在VCに参加していません");
+			return interaction.reply(":thinking: BOTは現在VCに参加していません。");
 		}
 		else if (connection) {
 			guildData.delete(guild.id);

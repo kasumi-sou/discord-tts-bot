@@ -6,17 +6,17 @@ module.exports = {
 	once: false,
 	data: new SlashCommandBuilder()
 		.setName("join")
-		.setDescription("VCに参加します"),
+		.setDescription("VCに参加します。"),
 	async execute(interaction) {
 		const guild = interaction.guild;
 		const member = await guild.members.fetch(interaction.member.id);
 		const channel = member.voice.channel;
 		const connectedChannel = interaction.guild.members.me.voice.channel;
 		if (!channel) {
-			return interaction.reply(":cold_sweat: VCに参加してから実行してください");
+			return interaction.reply(":cold_sweat: VCに参加してから実行してください。");
 		}
 		else if (connectedChannel) {
-			return interaction.reply(`:shaking_face: 既に **${connectedChannel.name}** に参加しています`);
+			return interaction.reply(`:shaking_face: 既に **${connectedChannel.name}** に参加しています。`);
 		}
 		else if (!connectedChannel) {
 			joinVoiceChannel({

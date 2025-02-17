@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("help")
-		.setDescription("ヘルプを表示します"),
+		.setDescription("ヘルプを表示します。"),
 	async execute(interaction) {
 		const help = new EmbedBuilder()
 			.setColor(0xffdbed)

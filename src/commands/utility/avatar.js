@@ -3,10 +3,10 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("avatar")
-		.setDescription("アバター画像を返します")
+		.setDescription("アバター画像を返します。")
 		.addUserOption(option =>
 			option.setName("user")
-				.setDescription("ユーザを選択してください")
+				.setDescription("ユーザを選択してください。")
 				.setRequired(true),
 		),
 	/**
