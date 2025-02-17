@@ -2,7 +2,7 @@ const { Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 const reply = require("../reply/");
 // const readMessages = require("../voice/tts/readMessages");
-const playAudio = require("../voice/tts/");
+const { playMessage } = require("../voice/tts/");
 const { guild } = require("../data");
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 					if (message.content.startsWith("'")) {
 						return;
 					}
-				  await playAudio(message);
+				  await playMessage(message);
 				}
 			}
 			else { console.error("An unexpected error occurred."); }

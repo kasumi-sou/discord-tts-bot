@@ -6,12 +6,12 @@ const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
 const { user:styeleId } = require("../../data");
 
 
-module.exports = async function readMessages(message, messageContent) {
+module.exports = async function readMessages(messageContent, userId) {
 	// const soundPath = `sounds/${message.author.id}.wav`;
 	// const soundPath = `sounds/${message.id}.wav`;
 	// const defaultVoice = "14";
 	const defaultVoice = "6";
-	let voice = styeleId.get(message.author.id);
+	let voice = styeleId.get(userId);
 	if (!voice) {
 		voice = defaultVoice;
 	}
