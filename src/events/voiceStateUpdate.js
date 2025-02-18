@@ -26,7 +26,7 @@ module.exports = {
 			else if (oldState.channelId === vcChannel.id) {
 				const memberCount = () => oldState.channel.members.size;
 				if (memberCount() === 1) {
-					await textChannel.send(`:lying_face: **${vcChannel.name}** から誰もいなくなりました。\n5分後に誰もボイスチャンネルに接続していない場合、自動的に退出します。`);
+					await textChannel.send(`:lying_face: **${vcChannel.name}** から誰もいなくなりました。5分後に自動で退出します。`);
 					setTimeout(async () => {
 						if (memberCount() > 1) {
 							return;
