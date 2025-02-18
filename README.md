@@ -39,7 +39,7 @@ node.js, discord.js, docker, VOICEVOX 等を使用します。
 
 4. `config.json`を作成
 
-    ```
+    ```json
     {
    "token": "BOTのtoken",
       "clientId": "BOTのclientId"
@@ -51,14 +51,14 @@ node.js, discord.js, docker, VOICEVOX 等を使用します。
 
     CPU
 
-    ```
+    ```docker
     docker pull voicevox/voicevox_engine:cpu-latest
     docker run --rm -it -p '127.0.0.1:50021:50021' voicevox/voicevox_engine:cpu-latest
     ```
 
     GPU
 
-    ```
+    ```docker
     docker pull voicevox/voicevox_engine:nvidia-latest
     docker run --rm --gpus all -p '127.0.0.1:50021:50021' voicevox/voicevox_engine:nvidia-latest
     ```
@@ -73,10 +73,16 @@ node.js, discord.js, docker, VOICEVOX 等を使用します。
 
 1. 以下のコマンドを実行
 
-    ```
+    ```sh
+    # ソース更新
     git fetch
     git reset --hard "リリースタグ名"
     npm i
+
+    # スラッシュコマンド更新
+    node deploy-commands.js
+    # 起動
+    node src
     ```
 
 ## 注意
