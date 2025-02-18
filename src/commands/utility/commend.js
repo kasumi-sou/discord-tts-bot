@@ -11,9 +11,10 @@ module.exports = {
 			.addFields(
 				{ name: "ボイスチャンネルに参加します。", value: "```/join```" },
 				{ name: "ボイスチャンネルから退出します。", value: "```/leave```" },
-				{ name: "Google検索(もどき)をします。", value: "```/google```" },
 				{ name: "ヘルプを表示します。", value: "```/help```" },
 				{ name: "コマンド一覧を表示します。", value: "```/command```" },
+				{ name: "Google検索(もどき)をします。", value: "```/google```" },
+				{ name: "アバターを表示します。", value: "```/avatar```" },
 			)
 			.setFooter({ text: `${interaction.guild.members.me.displayName} / version: ${version}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
 		await interaction.reply({ embeds: [command] });
