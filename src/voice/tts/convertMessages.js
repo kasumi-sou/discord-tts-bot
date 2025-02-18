@@ -48,27 +48,28 @@ module.exports = function(message) {
 		return "コードブロック";
 	}
 	if (messageContent.includes("http://") || messageContent.includes("https://")) {
-		if (messageContent.includes("youtube")) {
+		if (messageContent.includes("youtube") || messageContent.includes("youtu.be")) {
 			return "ユーチューブのURL";
 		}
-		if (messageContent.includes("youtu.be")) {
-			return "ユーチューブのURL";
-		}
-		if (messageContent.includes("twitter")) {
-			return "ツイッターのURL";
-		}
-		if (messageContent.includes("x.com")) {
+		if (messageContent.includes("twitter") || messageContent.includes("x.com")) {
 			return "ツイッターのURL";
 		}
 		return "URL省略";
 	}
 	if (messageContent.includes("#")) {
-		return messageContent.replaceAll("#", "");
+		if (messageContent.startsWith("#")) {
+			messageContent = messageContent.replaceAll("#", "");
+		}
+		messageContent = messageContent.replaceAll("#", "しゃーぷ");
 	}
-	if (messageContent.includes("(φωφ)ﾎﾎｫ…")) {
-		return messageContent.replaceAll("(φωφ)ﾎﾎｫ…", "ほほぉ");
-	}
-	else {return messageContent;}
+	messageContent = messageContent
+		.replaceAll("＃", "しゃーぷ")
+		.replaceAll("+", "ぷらす")
+		.replaceAll("＋", "ぷらす")
+		.replaceAll("™️", "トレードマーク")
+		.replaceAll("(φωφ)ﾎﾎｫ…", "ほほぉ")
+		.replaceAll("( ˙꒳​˙  )", "まがお");
+	return messageContent;
 };
 
 function romajiToHiragana(romaji) {
