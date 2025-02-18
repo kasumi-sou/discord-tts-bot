@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { version } = require("../../../package.json");
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("command")
@@ -13,7 +14,8 @@ module.exports = {
 				{ name: "Google検索(もどき)をします。", value: "```/google```" },
 				{ name: "ヘルプを表示します。", value: "```/help```" },
 				{ name: "コマンド一覧を表示します。", value: "```/command```" },
-			);
+			)
+			.setFooter({ text: `${interaction.guild.members.me.displayName} / version: ${version}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
 		await interaction.reply({ embeds: [command] });
 	},
 };
