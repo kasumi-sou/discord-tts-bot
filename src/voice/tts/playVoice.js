@@ -24,6 +24,7 @@ module.exports = async function play(audioResource, guildId) {
 		});
 		connection.subscribe(player);
 		player.play(audioResource);
-		await entersState(player, AudioPlayerStatus.Idle, 30000);
+		// eslint-disable-next-line no-inline-comments
+		await entersState(player, AudioPlayerStatus.Idle, 60000 /* 」1分*/ * 60/* 」60分 */);
 	});
 };
