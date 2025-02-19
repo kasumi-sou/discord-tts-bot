@@ -7,8 +7,10 @@ node.js, discord.js, docker, VOICEVOX 等を使用します。
 ## Features
 
 - 各種スラッシュコマンドにより指定のVCへ参加
+- ユーザーごとに声を設定
 - 指定されたキーワードでGoogle検索(半実装)
 - 特定のメッセージが送信された際に自動で返信して会話を盛り上げます
+- 指定ユーザーのアバター画像を表示
 
 ## Commands
 
@@ -47,7 +49,7 @@ node.js, discord.js, docker, VOICEVOX 等を使用します。
     ```
 
 5. [docker](https://www.docker.com/)をインストール
-6. docker上でVOICEVOXをインストール,サーバ実行
+6. docker上でVOICEVOXをインストール,サーバ起動
 
     CPU
 
