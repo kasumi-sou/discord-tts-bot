@@ -63,7 +63,7 @@ module.exports = {
 		const styleObj = charaObj.styles.find(style => (style.name === selectedStyle));
 		const styleId = styleObj.id;
 
-		userData.set(memberId, styleId);
+		userData.set(memberId, { style: styleId });
 
 		await interaction.reply(`:v: 声を **${selectedChara}** の **${selectedStyle}**(id: ${styleId}) に設定しました！`);
 

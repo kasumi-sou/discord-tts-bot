@@ -18,11 +18,11 @@ module.exports = {
 		if (!channel) {
 			return interaction.reply(":cold_sweat: VCに参加してから実行してください。");
 		}
-		else if (!connection || !guildData.has(guild.id)) {
+		else if (!connection || !guildData.get(guild.id)?.channel) {
 			return interaction.reply(":thinking: BOTは現在VCに参加していません。");
 		}
 		else if (connection) {
-			guildData.delete(guild.id);
+			guildData.get(guildId).channel = null;
 			connection.destroy();
 			interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}

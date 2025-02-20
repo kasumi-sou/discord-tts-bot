@@ -15,7 +15,7 @@ module.exports = {
 
 	async execute(oldState, newState) {
 		const guildId = oldState.guild.id;
-		const textChannelId = guildData.get(guildId);
+		const textChannelId = guildData.get(guildId)?.channel;
 		const textChannel = oldState.client.channels.resolve(textChannelId);
 		if ((oldState.channelId !== newState.channelId) && (newState.id !== oldState.client.user.id)) {
 			const vcChannel = newState.guild.members.me.voice.channel;
@@ -34,7 +34,7 @@ module.exports = {
 						else {
 							const connection = getVoiceConnection(guildId);
 							await textChannel.send(`:wave: **${vcChannel.name}** から誰もいなくなってから5分経過したため退出しました。`);
-							guildData.delete(guildId);
+							guildData.get(guildId).channel = null;
 							connection.destroy();
 						}
 					// eslint-disable-next-line no-inline-comments
@@ -49,9 +49,9 @@ module.exports = {
 				const connectedChannelNameOld = oldState.channel.name;
 				if (newState.id !== oldState.client.user.id) return;
 				if (!newState.channelId) {
-					if (guildData.has(guildId)) {
+					if (guildData.get(guildId)?.channel) {
 						await textChannel.send(`:pleading_face:  **${connectedChannelNameOld}** から強制的に切断されました。`);
-						guildData.delete(guildId);
+						guildData.get(guildId).channel = null;
 					}
 				}
 			}

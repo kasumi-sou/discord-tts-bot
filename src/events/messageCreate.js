@@ -15,9 +15,9 @@ module.exports = {
 			}
 			await reply(message);
 			const connection = getVoiceConnection(message.guildId);
-			if (!connection || !guild.has(message.guildId)) { return; }
+			if (!connection || !guild.get(message.guildId)?.channel) { return; }
 			else if (connection) {
-				if (message.channel.id === guild.get(message.guildId)) {
+				if (message.channel.id === guild.get(message.guildId).channel) {
 					if (message.content.startsWith("'")) {
 						return;
 					}

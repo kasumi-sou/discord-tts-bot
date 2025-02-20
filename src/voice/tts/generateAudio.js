@@ -1,9 +1,9 @@
 // const fs = require("node:fs");
 const { default: axios } = require("axios");
+const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
 const { createAudioResource } = require("@discordjs/voice");
 const { Readable } = require("node:stream");
-const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
-const { user:styeleId } = require("../../data");
+const { user: userData } = require("../../data");
 
 
 module.exports = async function readMessages(messageContent, userId) {
@@ -11,7 +11,7 @@ module.exports = async function readMessages(messageContent, userId) {
 	// const soundPath = `sounds/${message.id}.wav`;
 	// const defaultVoice = "14";
 	const defaultVoice = "6";
-	let voice = styeleId.get(userId);
+	let voice = userData.get(userId)?.style;
 	if (!voice) {
 		voice = defaultVoice;
 	}

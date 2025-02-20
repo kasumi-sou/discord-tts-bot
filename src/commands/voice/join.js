@@ -26,7 +26,7 @@ module.exports = {
 				selfMute: false,
 			});
 			await interaction.reply(`:partying_face: **${channel.name}** に参加しました！`);
-			guildData.set(guild.id, interaction.channelId);
+			guildData.set(guild.id, { channel: interaction.channelId });
 		}
 		else {
 			await interaction.reply("An unexpected error occurred.");
