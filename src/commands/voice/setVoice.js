@@ -65,7 +65,7 @@ module.exports = {
 
 		userData.set(memberId, { style: styleId });
 
-		await interaction.reply(`:v: 声を **${selectedChara}** の **${selectedStyle}**(id: ${styleId}) に設定しました！`);
+		await interaction.reply(`:white_check_mark: 声を **${selectedChara}** の **${selectedStyle}**(id: ${styleId}) に設定しました！`);
 
 
 	},
