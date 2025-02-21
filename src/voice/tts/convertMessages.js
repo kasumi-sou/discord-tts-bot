@@ -63,12 +63,19 @@ module.exports = function(message) {
 		messageContent = messageContent.replaceAll("#", "しゃーぷ");
 	}
 	messageContent = messageContent
+		.replaceAll("(φωφ)ﾎﾎｫ…", "ほほぉ")
+		.replaceAll("( ˙꒳​˙  )", "まがお")
 		.replaceAll("＃", "しゃーぷ")
 		.replaceAll("+", "ぷらす")
 		.replaceAll("＋", "ぷらす")
 		.replaceAll("™️", "トレードマーク")
-		.replaceAll("(φωφ)ﾎﾎｫ…", "ほほぉ")
-		.replaceAll("( ˙꒳​˙  )", "まがお");
+		.replaceAll("=", "いこーる")
+		.replaceAll("＝", "いこーる")
+		.replaceAll("&", "あんど")
+		.replaceAll("-", "まいなす")
+		.replaceAll("%", "ぱーせんと")
+		.replaceAll("％", "ぱーせんと");
+
 	return messageContent;
 };
 
