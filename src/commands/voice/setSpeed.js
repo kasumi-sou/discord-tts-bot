@@ -6,11 +6,11 @@ module.exports = {
 	once: false,
 	data: new SlashCommandBuilder()
 		.setName("set_speed")
-		.setDescription("話す速度を設定します")
+		.setDescription("全体の話速を設定します")
 		.addStringOption((option) => (
 			option
 				.setName("speed")
-				.setDescription("0.3 ~ 5の間で指定してください(デフォルト値: 1 )")
+				.setDescription("0.3 ~ 5 の間で指定してください(デフォルト値: 1 )")
 				.setRequired(true)
 		)),
 	/**
@@ -27,6 +27,6 @@ module.exports = {
 		}
 		const memberId = interaction.member.id;
 		userData.set(memberId, { speed });
-		await interaction.reply(`:white_check_mark: 話す速度を **${speed}倍** に設定しました！`);
+		await interaction.reply(`:white_check_mark: 全体の話速を **${speed}** に設定しました！`);
 	},
 };

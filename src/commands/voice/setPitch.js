@@ -6,11 +6,11 @@ module.exports = {
 	once: false,
 	data: new SlashCommandBuilder()
 		.setName("set_pitch")
-		.setDescription("声のピッチを設定します")
+		.setDescription("全体の音高を設定します")
 		.addStringOption((option) => (
 			option
 				.setName("pitch")
-				.setDescription("-3 ~ 3の間で指定してください(デフォルト値: 0 )")
+				.setDescription("-3 ~ 3 の間で指定してください(デフォルト値: 0 )")
 				.setRequired(true)
 		)),
 	/**
@@ -27,6 +27,6 @@ module.exports = {
 		}
 		const memberId = interaction.member.id;
 		userData.set(memberId, { pitch });
-		await interaction.reply(`:white_check_mark: 声のピッチを **${pitch}倍** に設定しました！`);
+		await interaction.reply(`:white_check_mark: 全体の音高を **${pitch}** に設定しました！`);
 	},
 };

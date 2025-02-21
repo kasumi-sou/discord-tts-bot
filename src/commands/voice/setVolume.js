@@ -6,11 +6,11 @@ module.exports = {
 	once: false,
 	data: new SlashCommandBuilder()
 		.setName("set_volume")
-		.setDescription("読み上げの音量を設定します")
+		.setDescription("全体の音量を設定します")
 		.addStringOption((option) => (
 			option
 				.setName("volume")
-				.setDescription("0以上の指定してください(デフォルト値: 1 )")
+				.setDescription("0 以上の値を指定してください(デフォルト値: 1 )")
 				.setRequired(true)
 		)),
 	/**
@@ -28,6 +28,6 @@ module.exports = {
 		const memberId = interaction.member.id;
 
 		userData.set(memberId, { volume });
-		await interaction.reply(`:white_check_mark: 音量を **${volume}** に設定しました！`);
+		await interaction.reply(`:white_check_mark: 全体の音量を **${volume}** に設定しました！`);
 	},
 };

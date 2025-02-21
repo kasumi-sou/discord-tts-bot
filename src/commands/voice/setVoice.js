@@ -9,18 +9,18 @@ module.exports = {
 	once: false,
 	data: new SlashCommandBuilder()
 		.setName("set_voice")
-		.setDescription("キャラクターとしゃべり方を選択します")
+		.setDescription("キャラクターと話し方を選択します")
 		.addStringOption((option) => (
 			option
 				.setName("chara")
-				.setDescription("喋るキャラクターを選択します")
+				.setDescription("キャラクターを選択してください")
 				.setAutocomplete(true)
 				.setRequired(true)
 		))
 		.addStringOption((option) => (
 			option
 				.setName("style")
-				.setDescription("話し方を選択します")
+				.setDescription("話し方を選択してください")
 				.setAutocomplete(true)
 				.setRequired(true)
 		)),
@@ -65,7 +65,7 @@ module.exports = {
 
 		userData.set(memberId, { style: styleId });
 
-		await interaction.reply(`:white_check_mark: 声を **${selectedChara}** の **${selectedStyle}**(id: ${styleId}) に設定しました！`);
+		await interaction.reply(`:white_check_mark: キャラクターを **${selectedChara}** の **${selectedStyle}**(id: ${styleId}) に設定しました！`);
 
 
 	},
