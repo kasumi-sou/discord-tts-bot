@@ -22,7 +22,7 @@ module.exports = {
 			return interaction.reply(":thinking: BOTは現在VCに参加していません。");
 		}
 		else if (connection) {
-			guildData.get(guildId).channel = null;
+			guildData.get(guild.id).channel = null;
 			connection.destroy();
 			interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}
