@@ -42,6 +42,10 @@ module.exports = async function readMessages(messageContent, userId) {
 			audioQuery.volumeScale = memberData.volume;
 		}
 
+		if (memberData?.intonation) {
+			audioQuery.intonationScale = memberData.intonation;
+		}
+
 		audioQuery.outputStereo = false;
 
 		const synthesis = await rpc.post(`synthesis?speaker=${speakerName}`, JSON.stringify(audioQuery), {
