@@ -1,3 +1,5 @@
+"use strict";
+
 const { createAudioPlayer, NoSubscriberBehavior, getVoiceConnection, entersState, AudioPlayerStatus } = require("@discordjs/voice");
 const { LockObj, lock } = require("@mtripg6666tdr/async-lock");
 // const locker = new LockObj();

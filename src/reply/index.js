@@ -1,3 +1,5 @@
+"use strict";
+
 const owata = require("./owata.js");
 const replyImages = require("./replyImages.js");
 

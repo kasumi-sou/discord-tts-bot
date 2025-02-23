@@ -1,3 +1,5 @@
+"use strict";
+
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { version } = require("../../../package.json");
 const updateEmbed = require("../../../utils/updateEmbed");

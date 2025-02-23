@@ -1,3 +1,5 @@
+"use strict";
+
 const { Client, GatewayIntentBits } = require("discord.js");
 const { token } = require("../config.json");
 const updateEmbed = require("./updateEmbed");

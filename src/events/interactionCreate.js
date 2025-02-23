@@ -1,3 +1,5 @@
+"use strict";
+
 const { Events, MessageFlags } = require("discord.js");
 
 module.exports = {

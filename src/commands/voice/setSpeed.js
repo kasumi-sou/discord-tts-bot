@@ -1,3 +1,5 @@
+"use strict";
+
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { user: userData } = require("../../data");
 

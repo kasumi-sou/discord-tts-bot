@@ -1,3 +1,5 @@
+"use strict";
+
 const romajiConv = require("@koozaki/romaji-conv");
 /**
  * convert message to suitable for reading

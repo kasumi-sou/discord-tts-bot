@@ -1,3 +1,5 @@
+"use strict";
+
 // const fs = require("node:fs");
 const generateAudio = require("./generateAudio");
 const playVoice = require("./playVoice");

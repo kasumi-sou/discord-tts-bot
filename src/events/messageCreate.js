@@ -1,3 +1,5 @@
+"use strict";
+
 const { Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 const reply = require("../reply/");

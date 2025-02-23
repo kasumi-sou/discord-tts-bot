@@ -1,3 +1,5 @@
+"use strict";
+
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { joinVoiceChannel } = require("@discordjs/voice");
 const { guild: guildData } = require("../../data");

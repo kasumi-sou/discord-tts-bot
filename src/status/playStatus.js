@@ -1,3 +1,5 @@
+"use strict";
+
 const { Events, ActivityType } = require("discord.js");
 
 module.exports = {

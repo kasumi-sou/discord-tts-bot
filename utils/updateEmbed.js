@@ -1,3 +1,5 @@
+"use strict";
+
 const { EmbedBuilder } = require("discord.js");
 const { version } = require("../package.json");
 module.exports = new EmbedBuilder()

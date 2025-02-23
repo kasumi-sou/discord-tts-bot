@@ -1,3 +1,5 @@
+"use strict";
+
 const { Events } = require("discord.js");
 const { guild: guildData } = require("../data");
 const { playText } = require("../voice/tts");

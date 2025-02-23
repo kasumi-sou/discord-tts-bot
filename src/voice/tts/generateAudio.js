@@ -1,3 +1,5 @@
+"use strict";
+
 // const fs = require("node:fs");
 const { default: axios } = require("axios");
 const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });

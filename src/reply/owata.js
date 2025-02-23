@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = async function(message) {
 	if (message.content.includes("／(^o^)＼")) {
 		await message.channel.send("／(^o^)＼");

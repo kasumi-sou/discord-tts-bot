@@ -1,3 +1,5 @@
+"use strict";
+
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { default: axios } = require("axios");
 const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });

@@ -1,3 +1,5 @@
+"use strict";
+
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 const { guild: guildData } = require("../../data");
@@ -22,7 +24,7 @@ module.exports = {
 			return interaction.reply(":thinking: BOTは現在VCに参加していません。");
 		}
 		else if (connection) {
-			guildData.get(guild.id).channel = null;
+			guildData.set(guild.id, { channel: null });
 			connection.destroy();
 			interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}
