@@ -1,6 +1,8 @@
 "use strict";
 
+const { user: userData } = require("../../data");
 const romajiConv = require("@koozaki/romaji-conv");
+
 /**
  * convert message to suitable for reading
  * @param {import("discord.js").Message} message input message
@@ -77,6 +79,11 @@ module.exports = function(message) {
 		.replaceAll("-", "まいなす")
 		.replaceAll("%", "ぱーせんと")
 		.replaceAll("％", "ぱーせんと");
+
+	const memberData = userData.get(message.member.id);
+	if (memberData?.zundamonMode) {
+		messageContent += "なのだ！";
+	}
 
 	return messageContent;
 };
