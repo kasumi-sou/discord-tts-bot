@@ -2,6 +2,7 @@
 
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
+// botのギルドデータ取得
 const { guild: guildData } = require("../../data");
 
 module.exports = {
@@ -15,20 +16,29 @@ module.exports = {
 		const connection = getVoiceConnection(interaction.guildId);
 		const guild = interaction.guild;
 		const member = await guild.members.fetch(interaction.member.id);
+		// コマンド実行者の参加しているボイスチャンネル取得
 		const channel = member.voice.channel;
+		// botの参加しているボイスチャンネル取得
 		const connectedChannel = interaction.guild.members.me.voice.channel;
+
 		if (!channel) {
+			// コマンド実行者がボイスチャンネルにいない場合
 			return interaction.reply(":cold_sweat: VCに参加してから実行してください。");
 		}
 		else if (!connection || !guildData.get(guild.id)?.channel) {
+			// すでにbotがボイスチャンネルに参加している場合
 			return interaction.reply(":thinking: BOTは現在VCに参加していません。");
 		}
 		else if (connection) {
+			// 切断処理
+			// ギルドデータにの接続済ボイスチャンネルをnullにセット
 			guildData.set(guild.id, { channel: null });
+			// 接続破棄
 			connection.destroy();
 			interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
 		}
 		else {
+			// エラー処理
 			await interaction.reply("An unexpected error occurred.");
 			console.error("An unexpected error occurred.");
 		}

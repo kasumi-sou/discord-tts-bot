@@ -2,6 +2,7 @@
 
 const { SlashCommandBuilder } = require("discord.js");
 
+// 未実装 いつかやる™
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("google")

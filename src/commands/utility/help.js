@@ -22,6 +22,8 @@ module.exports = {
 
 		const unixNowTime = Date.now();
 		const expTime = new Date("2025/2/27 0:00:00 GMT+9").getTime();
+
+		// expTimeまではコマンド実行時に新機能エンベッドを追加
 		if (unixNowTime > expTime) {
 			await interaction.reply({ embeds: [help] });
 		}

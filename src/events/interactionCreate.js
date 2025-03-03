@@ -2,6 +2,8 @@
 
 const { Events, MessageFlags } = require("discord.js");
 
+
+// この辺は公式ガイドと同じ
 module.exports = {
 	name: Events.InteractionCreate,
 	/**

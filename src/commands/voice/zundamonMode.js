@@ -13,6 +13,7 @@ module.exports = {
 	async execute(interaction) {
 		const memberId = interaction.member.id;
 
+		// userDataにzundamonModeのT/Fをセット
 		if (!userData.get(memberId)?.zundamonMode) {
 			userData.set(memberId, { zundamonMode: true });
 			await interaction.reply(":white_check_mark: ずんだもんモード **オン** に設定したのだ！");

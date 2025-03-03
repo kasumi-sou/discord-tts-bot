@@ -24,10 +24,13 @@ module.exports = {
 
 		// eslint-disable-next-line yoda
 		if (speed < 0.3 || 5 < speed) {
+			// 0.1とか実用的でないので0.3~, 5でも早すぎて全然聞き取れないレベルだったので上限5で設定
 			await interaction.reply(":warning: **値が不正です！**");
+			// 処理止まってくれないと困るのでリターン
 			return;
 		}
 		const memberId = interaction.member.id;
+		// 例のごとく値をセット
 		userData.set(memberId, { speed });
 		await interaction.reply(`:white_check_mark: 全体の話速を **${speed}** に設定しました！`);
 	},

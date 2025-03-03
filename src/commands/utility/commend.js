@@ -1,6 +1,8 @@
 "use strict";
 
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+
+// botのバージョンをjsonから取得
 const { version } = require("../../../package.json");
 module.exports = {
 	data: new SlashCommandBuilder()

@@ -1,6 +1,7 @@
 "use strict";
 
 const { Events, SlashCommandBuilder } = require("discord.js");
+// ユーザーデータに保存するため読み込み
 const { user: userData } = require("../../data");
 
 module.exports = {
@@ -21,16 +22,20 @@ module.exports = {
    */
 	async execute(interaction) {
 
+		// 入力値を保存
 		const intonation = interaction.options.getString("intonation");
 
 		// eslint-disable-next-line yoda
 		if (intonation < -3 || 3 < intonation) {
+			// APIの仕様では多分値に制限はないみたいだが、一応-3~3に制限
 			await interaction.reply(":warning: **値が不正です！**");
+			// 処理続いたら困るのでリターン
 			return;
 		}
 
 		const memberId = interaction.member.id;
 
+		// ユーザーデータに値をセット
 		userData.set(memberId, { intonation });
 		await interaction.reply(`:white_check_mark: 全体の抑揚を **${intonation}** に設定しました！`);
 	},
