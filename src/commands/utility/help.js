@@ -12,11 +12,14 @@ module.exports = {
 			.setColor(0xffdbed)
 			.setTitle("Discord-TTS-Bot")
 			.setURL("https://github.com/kasumi-sou/discord-tts-bot")
-			.setDescription("オープンソースのdiscord.js製の読み上げBOTです。\n読み上げにはVOICEVOXを使用しています。\n利用可能なコマンドを確認するには `/command` を使用してください。\n不具合が発生した場合github上でissueを作成していただけると助かります。")
+			.setDescription("オープンソースのdiscord.js製の読み上げBOTです。\n読み上げにはVOICEVOX及びAivisSpeechを使用しています。\n利用可能なコマンドを確認するには `/command` を使用してください。\n不具合が発生した場合github上でissueを作成していただけると助かります。")
 			.addFields(
 				{ name: "\n", value: "\n" },
 				{ name: "ソースコード", value: "https://github.com/kasumi-sou/discord-tts-bot" },
 				{ name: "制作者", value: "https://github.com/kasumi-sou" },
+				{ name: "VoiceVox公式サイト", value: "https://voicevox.hiroshiba.jp/" },
+				{ name: "AivisSpeech公式サイト", value: "https://aivis-project.com/#products-aivisspeech" },
+				{ name: "\n", value: "また、bot利用前に`/license`から**必ず**利用規約をご確認ください。" },
 			)
 			.setFooter({ text: `${interaction.guild.members.me.displayName} / version: ${version}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
 
