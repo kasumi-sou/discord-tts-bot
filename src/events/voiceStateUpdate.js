@@ -47,14 +47,14 @@ module.exports = {
 					await playText(`${oldState.member.displayName}が${vcChannel.name}から退出しました`, guildId);
 				}
 			}
-			if (oldState.channel && !newState.channel) {
-				const connectedChannelNameOld = oldState.channel.name;
-				if (newState.id !== oldState.client.user.id) return;
-				if (!newState.channelId) {
-					if (guildData.get(guildId)?.channel) {
-						await textChannel.send(`:pleading_face:  **${connectedChannelNameOld}** から強制的に切断されました。`);
-						guildData.get(guildId).channel = null;
-					}
+		}
+		if (oldState.channel && !newState.channel) {
+			const connectedChannelNameOld = oldState.channel.name;
+			if (newState.id !== oldState.client.user.id) return;
+			if (!newState.channelId) {
+				if (guildData.get(guildId)?.channel) {
+					await textChannel.send(`:pleading_face:  **${connectedChannelNameOld}** から強制的に切断されました。`);
+					guildData.set(guildId, { channel: null });
 				}
 			}
 		}
