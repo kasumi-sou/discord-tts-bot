@@ -1,6 +1,7 @@
 "use strict";
 
 const { createAudioPlayer, NoSubscriberBehavior, getVoiceConnection, entersState, AudioPlayerStatus } = require("@discordjs/voice");
+const { guild: guildData } = require("../../data");
 const { LockObj, lock } = require("@mtripg6666tdr/async-lock");
 // const locker = new LockObj();
 const guildLocker = new Map();
@@ -18,14 +19,25 @@ module.exports = async function play(audioResource, guildId) {
 	await lock(getLockerByGuildId(guildId), async () => {
 		const connection = getVoiceConnection(guildId);
 		if (!connection) { return; }
-		// const resource = createAudioResource(AudioResource, { inputType: StreamType.Arbitrary });
-		const player = createAudioPlayer({
-			behaviors: {
-				noSubscriber: NoSubscriberBehavior.Pause,
-			},
-		});
-		connection.subscribe(player);
+
+		let player = null;
+
+		if (guildData.get(guildId).player) {
+			player = guildData.get(guildId).player;
+		}
+		else {
+			// const resource = createAudioResource(AudioResource, { inputType: StreamType.Arbitrary });
+			player = createAudioPlayer({
+				behaviors: {
+					noSubscriber: NoSubscriberBehavior.Pause,
+				},
+			});
+			connection.subscribe(player);
+			guildData.set(guildId, { player: player });
+		}
+
 		player.play(audioResource);
+
 		// eslint-disable-next-line no-inline-comments
 		await entersState(player, AudioPlayerStatus.Idle, 60000 /* 」1分*/ * 60/* 」60分 */);
 	});
