@@ -23,6 +23,7 @@ module.exports = async function play(audioResource, guildId) {
 		let player = null;
 
 		if (guildData.get(guildId).player) {
+			// すでにプレイヤーを生成済みの場合は新たに生成せずに再利用
 			player = guildData.get(guildId).player;
 		}
 		else {
@@ -32,7 +33,9 @@ module.exports = async function play(audioResource, guildId) {
 					noSubscriber: NoSubscriberBehavior.Pause,
 				},
 			});
+			// プレイヤーがない場合は作成
 			connection.subscribe(player);
+			// Mapにプレイヤーをセット
 			guildData.set(guildId, { player: player });
 		}
 

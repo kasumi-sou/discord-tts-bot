@@ -7,6 +7,7 @@ module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
+		// 起動中は常に実行 10秒間隔で変更
 		while (true) {
 
 			await client.user.setActivity({

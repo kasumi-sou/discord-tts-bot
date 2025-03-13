@@ -12,6 +12,7 @@ const romajiConv = require("@koozaki/romaji-conv");
 module.exports = function(message) {
 	let messageContent = message.cleanContent.toLowerCase();
 
+	// ローマ字を日本語読み上げ (ex: hoge -> ほげ)
 	if (messageContent.match(/^(([lx]?(([kstnhmyrwdpfjzvcbg])\4?)?[yhs]?[aiueo])|n|nn|（）|\(\)|？|\?|-)+[wｗ]*$/)) {
 		messageContent = romajiToHiragana(messageContent);
 	}
@@ -60,8 +61,10 @@ module.exports = function(message) {
 		}
 		return "URL省略";
 	}
+
 	if (messageContent.includes("#")) {
 		if (messageContent.startsWith("#")) {
+			// 見出しはシャープと読まれないように
 			messageContent = messageContent.replaceAll("#", "");
 		}
 		messageContent = messageContent.replaceAll("#", "しゃーぷ");
@@ -81,6 +84,7 @@ module.exports = function(message) {
 		.replaceAll("％", "ぱーせんと");
 
 	const memberData = userData.get(message.member.id);
+	// ずんだ門モード
 	if (memberData?.zundamonMode) {
 		messageContent += "なのだ！";
 	}

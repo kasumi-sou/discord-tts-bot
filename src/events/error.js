@@ -1,6 +1,7 @@
 "use strict";
 const { Events } = require("discord.js");
 
+// エラーのイベントハンドラ
 module.exports = {
 	name: Events.Error,
 	once: false,
