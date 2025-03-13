@@ -2,6 +2,7 @@
 
 const { Events, ActivityType } = require("discord.js");
 const { setTimeout: sleep } = require("timers/promises");
+const { version } = require("../../package.json");
 
 module.exports = {
 	name: Events.ClientReady,
@@ -17,7 +18,7 @@ module.exports = {
 			await sleep(10000);
 
 			await client.user.setActivity({
-				name: "🎉 v0.2.0! 新機能は/helpから",
+				name: `🎉 v${version}! 新機能は/helpから`,
 				type: ActivityType.Custom,
 			});
 			await sleep(10000);
