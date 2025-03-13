@@ -9,7 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("set_speed")
 		.setDescription("全体の話速を設定します")
-		.addStringOption((option) => (
+		.addNumberOption((option) => (
 			option
 				.setName("speed")
 				.setDescription("0.3 ~ 5 の間で指定してください(デフォルト値: 1 )")
@@ -20,7 +20,7 @@ module.exports = {
    */
 	async execute(interaction) {
 
-		const speed = interaction.options.getString("speed");
+		const speed = interaction.options.getNumber("speed");
 
 		// eslint-disable-next-line yoda
 		if (speed < 0.3 || 5 < speed) {

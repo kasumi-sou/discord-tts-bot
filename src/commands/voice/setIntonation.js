@@ -10,7 +10,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("set_intonation")
 		.setDescription("全体の抑揚を設定します")
-		.addStringOption((option) => (
+		.addNumberOption((option) => (
 			option
 				.setName("intonation")
 				.setDescription("-3 ~ 3 の間で指定してください(デフォルト値: 1 )")
@@ -23,7 +23,7 @@ module.exports = {
 	async execute(interaction) {
 
 		// 入力値を保存
-		const intonation = interaction.options.getString("intonation");
+		const intonation = interaction.options.getNumber("intonation");
 
 		// eslint-disable-next-line yoda
 		if (intonation < -3 || 3 < intonation) {

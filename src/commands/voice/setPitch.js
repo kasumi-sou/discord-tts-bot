@@ -9,7 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("set_pitch")
 		.setDescription("全体の音高を設定します")
-		.addStringOption((option) => (
+		.addNumberOption((option) => (
 			option
 				.setName("pitch")
 				.setDescription("-3 ~ 3 の間で指定してください(デフォルト値: 0 )")
@@ -20,7 +20,7 @@ module.exports = {
    */
 	async execute(interaction) {
 
-		const pitch = interaction.options.getString("pitch");
+		const pitch = interaction.options.getNumber("pitch");
 
 		// eslint-disable-next-line yoda
 		if (pitch < -3 || 3 < pitch) {

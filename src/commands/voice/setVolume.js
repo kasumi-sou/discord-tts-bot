@@ -9,7 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("set_volume")
 		.setDescription("全体の音量を設定します")
-		.addStringOption((option) => (
+		.addNumberOption((option) => (
 			option
 				.setName("volume")
 				.setDescription("0 以上の値を指定してください(デフォルト値: 1 )")
@@ -19,7 +19,7 @@ module.exports = {
    * @type {(interaction: import("discord.js").CommandInteraction) => Promise<void>}
    */
 	async execute(interaction) {
-		const volume = interaction.options.getString("volume");
+		const volume = interaction.options.getNumber("volume");
 
 
 		if (volume < 0) {
