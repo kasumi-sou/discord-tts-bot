@@ -40,7 +40,7 @@ module.exports = {
 		const nowTime = new Date().toLocaleTimeString("ja-JP", timeOptions);
 
 		// 検索結果リスト
-		let description = "\n\n";
+		let description = "";
 		resultList.forEach((item) => description += `[${item.title}](${item.link})  \`${item.displayLink}\`\n-# ${item.snippet}\n\n`);
 
 		const resultEmbed = new EmbedBuilder()
