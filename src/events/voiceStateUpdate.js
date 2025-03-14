@@ -1,7 +1,14 @@
 "use strict";
 
 const { Events } = require("discord.js");
+
 const { guild: guildData } = require("../data");
+const { user: userData } = require("../data");
+
+const { default: axios } = require("axios");
+const rpcVoiceVox = axios.create({ baseURL: "http://localhost:50021", proxy: false });
+const rpcAivis = axios.create({ baseURL: "http://localhost:10101", proxy: false });
+
 const { playText } = require("../voice/tts");
 const { getVoiceConnection } = require("@discordjs/voice");
 
@@ -24,6 +31,24 @@ module.exports = {
 			if (!vcChannel) {return;}
 			if (newState.channelId === vcChannel.id) {
 				await playText(`${newState.member.displayName}が${vcChannel.name}に参加しました`, guildId);
+
+				// 参加者のボイスモデルを読み込み
+				const styleId = userData.get(newState.member.id)?.style;
+				if (!styleId) {return;};
+				// console.log(styleId);
+				const styleIdDigit = styleId.toString().length;
+
+				if (styleIdDigit <= 2) {
+					await rpcVoiceVox.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+						headers: { "accept": "application/json" },
+					});
+				}
+				else {
+					await rpcAivis.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+						headers: { "accept": "application/json" },
+					});
+				}
+				console.log(`model loaded ${styleId}`);
 			}
 			else if (oldState.channelId === vcChannel.id) {
 				const memberCount = () => oldState.channel.members.size;

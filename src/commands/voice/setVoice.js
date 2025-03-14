@@ -99,7 +99,22 @@ module.exports = {
 
 		await interaction.reply(`:white_check_mark: キャラクターを **${selectedChara}** の **${selectedStyle}** (id: ${styleId}) に設定しました！`);
 
+		// 以下指定モデルをロード
+		if (!styleId) {return;};
 
+		const styleIdDigit = styleId.toString().length;
+
+		if (styleIdDigit <= 2) {
+			await rpcVoiceVox.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+				headers: { "accept": "application/json" },
+			});
+		}
+		else {
+			await rpcAivis.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+				headers: { "accept": "application/json" },
+			});
+		}
+		console.log(`model loaded ${styleId}`);
 	},
 };
 

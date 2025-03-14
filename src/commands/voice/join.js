@@ -2,8 +2,15 @@
 
 const { SlashCommandBuilder, Events } = require("discord.js");
 const { joinVoiceChannel } = require("@discordjs/voice");
+
 // botのギルドデータ取得
 const { guild: guildData } = require("../../data");
+const { user: userData } = require("../../data");
+
+const { default: axios } = require("axios");
+const rpcVoiceVox = axios.create({ baseURL: "http://localhost:50021", proxy: false });
+const rpcAivis = axios.create({ baseURL: "http://localhost:10101", proxy: false });
+
 module.exports = {
 	name: Events.InteractionCreate,
 	once: false,
@@ -37,6 +44,34 @@ module.exports = {
 			await interaction.reply(`:partying_face: **${channel.name}** に参加しました！`);
 			// ギルドデータに接続済ボイスチャンネルidをセット
 			guildData.set(guild.id, { channel: interaction.channelId });
+
+			// すでに参加済みのメンバーのボイスモデルをロード
+
+			const members = channel.members;
+
+			members.forEach(async item => {
+
+				// ボイスチャンネルに参加済みのメンバーidと対応するstyleIdの取得
+				const memberId = item.user.id;
+				const styleId = userData.get(memberId)?.style;
+
+				if (!styleId) {return;};
+
+				const styleIdDigit = styleId.toString().length;
+
+				if (styleIdDigit <= 2) {
+					await rpcVoiceVox.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+						headers: { "accept": "application/json" },
+					});
+				}
+				else {
+					await rpcAivis.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+						headers: { "accept": "application/json" },
+					});
+				}
+				console.log(`model loaded ${styleId}`);
+			});
+
 		}
 		else {
 			// エラー処理
