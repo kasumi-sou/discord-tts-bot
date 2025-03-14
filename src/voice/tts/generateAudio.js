@@ -14,24 +14,24 @@ module.exports = async function readMessages(messageContent, userId) {
 	// const soundPath = `sounds/${message.id}.wav`;
 	// const defaultVoice = "14";
 
-	let voiceId = userData.get(userId)?.style;
+	let styleId = userData.get(userId)?.style;
 	// 6は四国めたん
 	const defaultVoice = "6";
 
 	// voiceIdがない場合(そもそも設定してない or 入退出通知のときはデフォルトボイス)
-	if (!voiceId) {voiceId = defaultVoice;}
-	const voiceIdDigit = voiceId.toString().length;
+	if (!styleId) {styleId = defaultVoice;}
+	const styleIdDigit = styleId.toString().length;
 
 	// voicevox使用かaivis使用かはidの桁数で判定
-	if (voiceIdDigit <= 2) {
+	if (styleIdDigit <= 2) {
 		// voiceIdが2桁以下、すなわちvoicevoxのキャラidが指定されている場合voicevoxで音声生成
-		const resource = await generateAudioVoiVo(messageContent, voiceId);
+		const resource = await generateAudioVoiVo(messageContent, styleId);
 		console.log(messageContent);
 		return resource;
 	}
-	else if (voiceIdDigit > 2) {
+	else if (styleIdDigit > 2) {
 		// voiceIdが二桁より大きい(aivisのキャラidは9桁?)場合はaivisで音声生成
-		const resource = await generateAudioAivis(messageContent, voiceId);
+		const resource = await generateAudioAivis(messageContent, styleId);
 		console.log(messageContent);
 		return resource;
 	}
