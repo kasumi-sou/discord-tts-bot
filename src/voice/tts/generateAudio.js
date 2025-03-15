@@ -10,109 +10,109 @@ const { user: userData } = require("../../data");
 
 
 module.exports = async function readMessages(messageContent, userId) {
-	// const soundPath = `sounds/${message.author.id}.wav`;
-	// const soundPath = `sounds/${message.id}.wav`;
-	// const defaultVoice = "14";
+  // const soundPath = `sounds/${message.author.id}.wav`;
+  // const soundPath = `sounds/${message.id}.wav`;
+  // const defaultVoice = "14";
 
-	let styleId = userData.get(userId)?.style;
-	// 6は四国めたん
-	const defaultVoice = "6";
+  let styleId = userData.get(userId)?.style;
+  // 6は四国めたん
+  const defaultVoice = "6";
 
-	// voiceIdがない場合(そもそも設定してない or 入退出通知のときはデフォルトボイス)
-	if (!styleId) {styleId = defaultVoice;}
-	const styleIdDigit = styleId.toString().length;
+  // voiceIdがない場合(そもそも設定してない or 入退出通知のときはデフォルトボイス)
+  if (!styleId) {styleId = defaultVoice;}
+  const styleIdDigit = styleId.toString().length;
 
-	// voicevox使用かaivis使用かはidの桁数で判定
-	if (styleIdDigit <= 2) {
-		// voiceIdが2桁以下、すなわちvoicevoxのキャラidが指定されている場合voicevoxで音声生成
-		const resource = await generateAudioVoiVo(messageContent, styleId);
-		console.log(messageContent);
-		return resource;
-	}
-	else if (styleIdDigit > 2) {
-		// voiceIdが二桁より大きい(aivisのキャラidは9桁?)場合はaivisで音声生成
-		const resource = await generateAudioAivis(messageContent, styleId);
-		console.log(messageContent);
-		return resource;
-	}
+  // voicevox使用かaivis使用かはidの桁数で判定
+  if (styleIdDigit <= 2) {
+    // voiceIdが2桁以下、すなわちvoicevoxのキャラidが指定されている場合voicevoxで音声生成
+    const resource = await generateAudioVoiVo(messageContent, styleId);
+    console.log(messageContent);
+    return resource;
+  }
+  else if (styleIdDigit > 2) {
+    // voiceIdが二桁より大きい(aivisのキャラidは9桁?)場合はaivisで音声生成
+    const resource = await generateAudioAivis(messageContent, styleId);
+    console.log(messageContent);
+    return resource;
+  }
 
 
-	// console.log(voice);
-	// const convMessage = message;
+  // console.log(voice);
+  // const convMessage = message;
 
-	// const resource = await generateAudioVoiVo(messageContent, voiceId);
+  // const resource = await generateAudioVoiVo(messageContent, voiceId);
 
-	// await play(convMessage, soundPath);
-	// console.log(messageContent);
+  // await play(convMessage, soundPath);
+  // console.log(messageContent);
 
-	// ここまで 旧readMessages.jsの内容
-	// ここから 旧generateAudio.jsの内容
+  // ここまで 旧readMessages.jsの内容
+  // ここから 旧generateAudio.jsの内容
 
-	// voicevox音声生成の関数
-	async function generateAudioVoiVo(text, speakerName) {
-		const audioQueryRes = await rpcVoiceVox.post(`audio_query?text=${encodeURI(text)}&speaker=${speakerName}`, {
-			headers: { "accept": "application/json" },
-		});
+  // voicevox音声生成の関数
+  async function generateAudioVoiVo(text, speakerName) {
+    const audioQueryRes = await rpcVoiceVox.post(`audio_query?text=${encodeURI(text)}&speaker=${speakerName}`, {
+      headers: { "accept": "application/json" },
+    });
 
-		// 設定を取得
-		const audioQuery = setting(audioQueryRes);
+    // 設定を取得
+    const audioQuery = setting(audioQueryRes);
 
-		const synthesis = await rpcVoiceVox.post(`synthesis?speaker=${speakerName}`, JSON.stringify(audioQuery), {
-			responseType: "arraybuffer",
-			headers: {
-				"accept": "audio/wav",
-				"Content-Type": "application/json",
-			},
-		});
+    const synthesis = await rpcVoiceVox.post(`synthesis?speaker=${speakerName}`, JSON.stringify(audioQuery), {
+      responseType: "arraybuffer",
+      headers: {
+        "accept": "audio/wav",
+        "Content-Type": "application/json",
+      },
+    });
 
-		// fs.writeFileSync(filePath, new Buffer.from(synthesis.data), "binary");
-		// return filePath;
-		return createAudioResource(Readable.from(synthesis.data));
-	}
+    // fs.writeFileSync(filePath, new Buffer.from(synthesis.data), "binary");
+    // return filePath;
+    return createAudioResource(Readable.from(synthesis.data));
+  }
 
-	// aivis音声生成の関数
-	async function generateAudioAivis(text, speakerName) {
-		const audioQueryRes = await rpcAivis.post(`audio_query?text=${encodeURI(text)}&speaker=${speakerName}`, {
-			headers: { "accept": "application/json" },
-		});
+  // aivis音声生成の関数
+  async function generateAudioAivis(text, speakerName) {
+    const audioQueryRes = await rpcAivis.post(`audio_query?text=${encodeURI(text)}&speaker=${speakerName}`, {
+      headers: { "accept": "application/json" },
+    });
 
-		const audioQuery = setting(audioQueryRes);
+    const audioQuery = setting(audioQueryRes);
 
-		const synthesis = await rpcAivis.post(`synthesis?speaker=${speakerName}`, JSON.stringify(audioQuery), {
-			responseType: "arraybuffer",
-			headers: {
-				"accept": "audio/wav",
-				"Content-Type": "application/json",
-			},
-		});
+    const synthesis = await rpcAivis.post(`synthesis?speaker=${speakerName}`, JSON.stringify(audioQuery), {
+      responseType: "arraybuffer",
+      headers: {
+        "accept": "audio/wav",
+        "Content-Type": "application/json",
+      },
+    });
 
-		return createAudioResource(Readable.from(synthesis.data));
-	}
+    return createAudioResource(Readable.from(synthesis.data));
+  }
 
-	// 設定取得関数
-	function setting(audioQueryRes) {
-		const audioQuery = { ...audioQueryRes.data };
-		const memberData = userData.get(userId);
+  // 設定取得関数
+  function setting(audioQueryRes) {
+    const audioQuery = { ...audioQueryRes.data };
+    const memberData = userData.get(userId);
 
-		if (memberData?.speed) {
-			audioQuery.speedScale = memberData.speed;
-		}
+    if (memberData?.speed) {
+      audioQuery.speedScale = memberData.speed;
+    }
 
-		if (memberData?.pitch) {
-			audioQuery.pitchScale = memberData.pitch;
-		}
+    if (memberData?.pitch) {
+      audioQuery.pitchScale = memberData.pitch;
+    }
 
-		if (memberData?.volume) {
-			audioQuery.volumeScale = memberData.volume;
-		}
+    if (memberData?.volume) {
+      audioQuery.volumeScale = memberData.volume;
+    }
 
-		if (memberData?.intonation) {
-			audioQuery.intonationScale = memberData.intonation;
-		}
+    if (memberData?.intonation) {
+      audioQuery.intonationScale = memberData.intonation;
+    }
 
-		audioQuery.outputStereo = false;
+    audioQuery.outputStereo = false;
 
-		return audioQuery;
-	}
+    return audioQuery;
+  }
 
 };

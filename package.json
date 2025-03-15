@@ -19,7 +19,8 @@
     "axios": "^1.8.2",
     "discord.js": "^14.18.0",
     "googleapis": "^146.0.0",
-    "libsodium-wrappers": "^0.7.15"
+    "libsodium-wrappers": "^0.7.15",
+    "systeminformation": "^5.25.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
