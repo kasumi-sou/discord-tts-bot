@@ -27,6 +27,9 @@ module.exports = {
 			auth: googleApiKey,
 			cx: engineId,
 			q: keyword,
+			gl: "jp",
+			hl: "ja",
+			lr: "lang_ja",
 		});
 
 		const resultList = result.data.items;
@@ -46,7 +49,7 @@ module.exports = {
 		const resultEmbed = new EmbedBuilder()
 			.setColor(0xffdbed)
 			.setTitle(`"${keyword}" の検索結果`)
-			.setURL(`https://www.google.co.jp/search?q=${keyword}`)
+			.setURL(`https://www.google.co.jp/search?q=${encodeURIComponent(keyword)}`)
 			.setDescription(description)
 			.setFooter({ text: `検索日時:  ${nowTime}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
 
