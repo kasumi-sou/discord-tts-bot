@@ -20,6 +20,9 @@ module.exports = {
         .setRequired(true)
     )),
   async execute(interaction) {
+    if (!googleApiKey || !engineId) {
+      return await interaction.reply("❌ この機能を使用するには追加の設定が必要です。ボットの管理者にお問い合わせください。\n-# 管理者の方へ GoogleCustomSearchの設定が必要です。詳細は[こちら](https://github.com/kasumi-sou/discord-tts-bot/blob/main/README.md)。");
+    }
     const keyword = interaction.options.getString("keyword");
 
     // googlecustomsearch
