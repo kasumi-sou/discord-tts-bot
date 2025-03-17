@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require("discord.js");
 const { google } = require("googleapis");
 const customSearch = google.customsearch("v1");
 
@@ -26,39 +26,44 @@ module.exports = {
     const keyword = interaction.options.getString("keyword");
 
     // googlecustomsearch
-    const result = await customSearch.cse.list({
-      auth: googleApiKey,
-      cx: engineId,
-      q: keyword,
-      gl: "jp",
-      hl: "ja",
-      lr: "lang_ja",
-    });
+    try {
+      const result = await customSearch.cse.list({
+        auth: googleApiKey,
+        cx: engineId,
+        q: keyword,
+        gl: "jp",
+        hl: "ja",
+        lr: "lang_ja",
+      });
 
-    const resultList = result.data.items;
+      const resultList = result.data.items;
 
-    const timeOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const nowTime = new Date().toLocaleTimeString("ja-JP", timeOptions);
+      const timeOptions = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const nowTime = new Date().toLocaleTimeString("ja-JP", timeOptions);
 
-    // 検索結果リスト
-    let description = "";
-    resultList.forEach((item) => description += `[${item.title}](${item.link})  \`${item.displayLink}\`\n-# ${item.snippet}\n\n`);
+      // 検索結果リスト
+      let description = "";
+      resultList.forEach((item) => description += `[${item.title}](${item.link})  \`${item.displayLink}\`\n-# ${item.snippet}\n\n`);
 
-    const resultEmbed = new EmbedBuilder()
-      .setColor(0xffdbed)
-      .setTitle(`"${keyword}" の検索結果`)
-      .setURL(`https://www.google.co.jp/search?q=${encodeURIComponent(keyword)}`)
-      .setDescription(description)
-      .setFooter({ text: `検索日時:  ${nowTime}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
+      const resultEmbed = new EmbedBuilder()
+        .setColor(0xffdbed)
+        .setTitle(`"${keyword}" の検索結果`)
+        .setURL(`https://www.google.co.jp/search?q=${encodeURIComponent(keyword)}`)
+        .setDescription(description)
+        .setFooter({ text: `検索日時:  ${nowTime}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
 
-    // console.log(resultList);
+      await interaction.reply({ embeds: [resultEmbed] });
+      // console.log(resultList);
 
-    await interaction.reply({ embeds: [resultEmbed] });
-
+    }
+    catch (e) {
+      await interaction.reply({ content: ":x: 何らかのエラーが発生しました。", flags: MessageFlags.Ephemeral });
+      console.error(e);
+    }
   },
 };
