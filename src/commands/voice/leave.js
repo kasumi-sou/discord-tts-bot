@@ -34,7 +34,7 @@ module.exports = {
       // ギルドデータにの接続済ボイスチャンネルをnullにセット
       guildData.set(guild.id, { channel: null });
       // 接続破棄
-      connection.destroy();
+      connection?.destroy();
       interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);
     }
     else {
