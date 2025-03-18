@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, Events } = require("discord.js");
+const { SlashCommandBuilder, Events, MessageFlags } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 // botのギルドデータ取得
 const { guild: guildData } = require("../../data");
@@ -23,7 +23,7 @@ module.exports = {
 
     if (!channel) {
       // コマンド実行者がボイスチャンネルにいない場合
-      return interaction.reply(":cold_sweat: VCに参加してから実行してください。");
+      return interaction.reply({ content: ":cold_sweat: ボイスチャンネルに参加してから実行してください。", flags: MessageFlags.Ephemeral });
     }
     else if (!connection || !guildData.get(guild.id)?.channel) {
       // すでにbotがボイスチャンネルに参加している場合

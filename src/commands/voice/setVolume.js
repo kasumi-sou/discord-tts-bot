@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, Events } = require("discord.js");
+const { SlashCommandBuilder, Events, MessageFlags } = require("discord.js");
 const { user: userData } = require("../../data");
 
 module.exports = {
@@ -8,6 +8,9 @@ module.exports = {
   once: false,
   data: new SlashCommandBuilder()
     .setName("set_volume")
+    .setNameLocalizations({
+      ja: "音量",
+    })
     .setDescription("全体の音量を設定します")
     .addNumberOption((option) => (
       option
@@ -23,7 +26,7 @@ module.exports = {
 
 
     if (volume < 0) {
-      await interaction.reply(":warning: **値が不正です！**");
+      await interaction.reply({ content: ":warning: **値が不正です！**", flags: MessageFlags.Ephemeral });
       return;
     }
 

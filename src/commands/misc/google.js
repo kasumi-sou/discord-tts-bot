@@ -16,6 +16,9 @@ module.exports = {
     .addStringOption((option) => (
       option
         .setName("keyword")
+        .setNameLocalizations({
+          ja: "キーワード",
+        })
         .setDescription("検索するキーワードを入力してください")
         .setRequired(true)
     )),
