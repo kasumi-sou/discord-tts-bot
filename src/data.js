@@ -55,16 +55,16 @@ module.exports = {
     },
   },
   dict: {
-    get(guilId) {
-      const getDictMap = dictMap.get(guilId);
+    get(guildId) {
+      const getDictMap = dictMap.get(guildId);
       if (getDictMap) {
         const dict = Object.freeze(getDictMap);
         return dict;
       }
-      else if (fs.existsSync(getGuildDictPath(guilId))) {
-        const dictJson = fs.readFileSync(getGuildDictPath(guilId), "utf-8");
+      else if (fs.existsSync(getGuildDictPath(guildId))) {
+        const dictJson = fs.readFileSync(getGuildDictPath(guildId), "utf-8");
         const dict = JSON.parse(dictJson);
-        dictMap.set(guilId, dict);
+        dictMap.set(guildId, dict);
         return Object.freeze(dict);
       }
       else {return [];}
