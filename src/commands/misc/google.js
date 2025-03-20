@@ -51,7 +51,13 @@ module.exports = {
 
       // 検索結果リスト
       let description = "";
-      resultList.forEach((item) => description += `[${item.title}](${item.link})  \`${item.displayLink}\`\n-# ${item.snippet}\n\n`);
+      if (resultList) {
+        resultList.forEach((item) => description += `[${item.title}](${item.link})  \`${item.displayLink}\`\n-# ${item.snippet}\n\n`);
+      }
+      else {
+        description = "キーワードに一致する情報は見つかりませんでした。";
+      }
+
 
       const resultEmbed = new EmbedBuilder()
         .setColor(0xffdbed)
