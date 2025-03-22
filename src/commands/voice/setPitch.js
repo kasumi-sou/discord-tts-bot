@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, Events } = require("discord.js");
+const { SlashCommandBuilder, Events, MessageFlags } = require("discord.js");
 const { user: userData } = require("../../data");
 
 module.exports = {
@@ -12,6 +12,9 @@ module.exports = {
     .addNumberOption((option) => (
       option
         .setName("pitch")
+        .setNameLocalizations({
+          ja: "音高",
+        })
         .setDescription("-3 ~ 3 の間で指定してください(デフォルト値: 0 )")
         .setRequired(true)
     )),
@@ -25,7 +28,7 @@ module.exports = {
     // eslint-disable-next-line yoda
     if (pitch < -3 || 3 < pitch) {
       // APIの仕様上多分数に制限はないようであるが統一性重視で-3~3に制限
-      await interaction.reply(":warning: **値が不正です！**");
+      await interaction.reply({ content: ":warning: **値が不正です！**", flags: MessageFlags.Ephemeral });
       return;
     }
     const memberId = interaction.member.id;

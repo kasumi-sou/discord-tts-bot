@@ -16,6 +16,9 @@ module.exports = {
     .addStringOption((option) => (
       option
         .setName("engine")
+        .setNameLocalizations({
+          ja: "エンジン",
+        })
         .setDescription("読み上げエンジンを選択します (代表的なキャラクター: VoiceVox: 四国めたん,ずんだもん など)")
         .addChoices(
           { name: "VoiceVox", value: "voiceVox" },
@@ -26,6 +29,9 @@ module.exports = {
     .addStringOption((option) => (
       option
         .setName("chara")
+        .setNameLocalizations({
+          ja: "キャラクター",
+        })
         .setDescription("キャラクターを選択してください")
         .setAutocomplete(true)
         .setRequired(true)
@@ -33,6 +39,9 @@ module.exports = {
     .addStringOption((option) => (
       option
         .setName("style")
+        .setNameLocalizations({
+          ja: "話し方",
+        })
         .setDescription("話し方を選択してください")
         .setAutocomplete(true)
         .setRequired(true)
