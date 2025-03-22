@@ -67,7 +67,7 @@ module.exports = {
         dictMap.set(guildId, dict);
         return Object.freeze(dict);
       }
-      else {return [];}
+      else { return []; }
     },
     set(guildId, value) {
       const dict = module.exports.dict.get(guildId);
@@ -77,6 +77,19 @@ module.exports = {
       const result = dictMap.set(guildId, newDict);
       fs.writeFileSync(getGuildDictPath(guildId), JSON.stringify(newDict), "utf-8");
       return result;
+    },
+    delete(guildId, word) {
+      const dict = module.exports.dict.get(guildId);
+
+      const newDict = [...dict.filter(entry => (word !== entry.word))];
+      if (dict.length === newDict.length) {
+        return false;
+      }
+
+      dictMap.set(guildId, newDict);
+      fs.writeFileSync(getGuildDictPath(guildId), JSON.stringify(newDict), "utf-8");
+
+      return true;
     },
   },
 };
