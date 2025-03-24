@@ -1,6 +1,6 @@
 "use strict";
 
-const fs = require("node:fs");
+const fs = require("fs");
 
 const guildMap = new Map();
 let userMap = new Map();
