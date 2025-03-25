@@ -1,6 +1,8 @@
 "use strict";
 
 const { user: userData } = require("../../data");
+const { dict: dictData } = require("../../data");
+
 const romajiConv = require("@koozaki/romaji-conv");
 
 /**
@@ -69,6 +71,20 @@ module.exports = function(message) {
     }
     messageContent = messageContent.replaceAll("#", "しゃーぷ");
   }
+
+  // ここからユーザー辞書の処理
+  const guildId = message.guild.id;
+  const dict = dictData.get(guildId);
+
+  if (!dict) {return;}
+
+  const sortedDict = dict.toSorted((a, b) => b.weight - a.weight);
+  for (const { word, read } of sortedDict) {
+    messageContent = messageContent.replaceAll(word, read);
+  }
+
+  console.log(messageContent);
+
   messageContent = messageContent
     .replaceAll("(φωφ)ﾎﾎｫ…", "ほほぉ")
     .replaceAll("( ˙꒳​˙  )", "まがお")
