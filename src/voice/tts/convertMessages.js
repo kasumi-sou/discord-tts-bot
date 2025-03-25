@@ -83,8 +83,6 @@ module.exports = function(message) {
     messageContent = messageContent.replaceAll(word, read);
   }
 
-  console.log(messageContent);
-
   messageContent = messageContent
     .replaceAll("(φωφ)ﾎﾎｫ…", "ほほぉ")
     .replaceAll("( ˙꒳​˙  )", "まがお")
