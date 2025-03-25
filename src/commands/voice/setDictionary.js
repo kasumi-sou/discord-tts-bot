@@ -16,7 +16,7 @@ module.exports = {
         .setNameLocalizations({
           "ja": "単語",
         })
-        .setDescription("読み方を指定する単語")
+        .setDescription("読み方を指定する単語(誤読み上げ防止の観点から1文字のみの登録は推奨しません。)")
         .setRequired(true)
     ))
     .addStringOption((option) => (
