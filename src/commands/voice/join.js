@@ -49,7 +49,10 @@ module.exports = {
 
       const members = channel.members;
 
-      members.forEach(async item => {
+      let isVoiceVoxAvailable = true;
+      let isAivisAvailable = true;
+
+      await Promise.all(members.map(async item => {
 
         // ボイスチャンネルに参加済みのメンバーidと対応するstyleIdの取得
         const memberId = item.user.id;
@@ -57,20 +60,42 @@ module.exports = {
 
         if (!styleId) {return;};
 
+        // styleIdの桁数でvoicevoxとaivisの判別
         const styleIdDigit = styleId.toString().length;
 
         if (styleIdDigit <= 2) {
-          await rpcVoiceVox.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
-            headers: { "accept": "application/json" },
-          });
+          try {
+            await rpcVoiceVox.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+              headers: { "accept": "application/json" },
+            });
+            console.log(`model loaded ${styleId}`);
+          }
+          catch (e) {
+            console.error(e);
+            isVoiceVoxAvailable = false;
+          }
+
         }
         else {
-          await rpcAivis.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
-            headers: { "accept": "application/json" },
-          });
+          try {
+            await rpcAivis.post(`initialize_speaker?speaker=${styleId}&skip_reinit=true`, {
+              headers: { "accept": "application/json" },
+            });
+            console.log(`model loaded ${styleId}`);
+          }
+          catch (e) {
+            console.error(e);
+            isAivisAvailable = false;
+          }
         }
-        console.log(`model loaded ${styleId}`);
-      });
+      }));
+
+      if (!isVoiceVoxAvailable) {
+        await interaction.channel.send(":warning: VOICEVOX読み上げは現在利用できません。管理者に連絡してください。");
+      }
+      if (!isAivisAvailable) {
+        await interaction.channel.send(":warning: AivisSpeech読み上げは現在利用できません。管理者に連絡してください。");
+      }
 
     }
     else {
