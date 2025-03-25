@@ -26,13 +26,13 @@ module.exports = async function readMessages(messageContent, userId) {
   if (styleIdDigit <= 2) {
     // voiceIdが2桁以下、すなわちvoicevoxのキャラidが指定されている場合voicevoxで音声生成
     const resource = await generateAudioVoiVo(messageContent, styleId);
-    console.log(messageContent);
+    // console.log(messageContent);
     return resource;
   }
   else if (styleIdDigit > 2) {
     // voiceIdが二桁より大きい(aivisのキャラidは9桁?)場合はaivisで音声生成
     const resource = await generateAudioAivis(messageContent, styleId);
-    console.log(messageContent);
+    // console.log(messageContent);
     return resource;
   }
 
