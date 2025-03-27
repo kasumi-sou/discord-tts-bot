@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, Events, MessageFlags } = require("discord.js");
+const { SlashCommandBuilder, Events } = require("discord.js");
 const { user: userData } = require("../../data");
 
 module.exports = {
@@ -16,6 +16,8 @@ module.exports = {
           ja: "話速",
         })
         .setDescription("0.3 ~ 5 の間で指定してください(デフォルト値: 1 )")
+        .setMinValue(0.3)
+        .setMaxValue(5)
         .setRequired(true)
     )),
   /**
@@ -25,13 +27,6 @@ module.exports = {
 
     const speed = interaction.options.getNumber("speed");
 
-    // eslint-disable-next-line yoda
-    if (speed < 0.3 || 5 < speed) {
-      // 0.1とか実用的でないので0.3~, 5でも早すぎて全然聞き取れないレベルだったので上限5で設定
-      await interaction.reply({ content: ":warning: **値が不正です！**", flags: MessageFlags.Ephemeral });
-      // 処理止まってくれないと困るのでリターン
-      return;
-    }
     const memberId = interaction.member.id;
     // 例のごとく値をセット
     userData.set(memberId, { speed });

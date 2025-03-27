@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, Events, MessageFlags } = require("discord.js");
+const { SlashCommandBuilder, Events } = require("discord.js");
 const { user: userData } = require("../../data");
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
       option
         .setName("volume")
         .setDescription("0 以上の値を指定してください(デフォルト値: 1 )")
+        .setMinValue(0)
         .setRequired(true)
     )),
   /**
@@ -23,12 +24,6 @@ module.exports = {
    */
   async execute(interaction) {
     const volume = interaction.options.getNumber("volume");
-
-
-    if (volume < 0) {
-      await interaction.reply({ content: ":warning: **値が不正です！**", flags: MessageFlags.Ephemeral });
-      return;
-    }
 
     const memberId = interaction.member.id;
 
