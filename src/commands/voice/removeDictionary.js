@@ -29,11 +29,11 @@ module.exports = {
 
     // dictが空配列のとき
     if (!dictData.delete(guildId, word)) {
-      return await interaction.reply({ content: ":warning: 辞書が登録されていません", flags: MessageFlags.Ephemeral });
+      return await interaction.reply({ content: ":warning: 辞書が登録されていません。", flags: MessageFlags.Ephemeral });
     }
 
 
-    await interaction.reply(`\`${word}\` の読みを辞書から削除しました`);
+    await interaction.reply(`\`${word}\` の読みを辞書から削除しました。`);
 
   },
 };

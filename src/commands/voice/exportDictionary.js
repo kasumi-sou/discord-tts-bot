@@ -9,7 +9,7 @@ module.exports = {
   once: false,
   data: new SlashCommandBuilder()
     .setName("export_dictionary")
-    .setDescription("登録している辞書データを指定された形式で出力します。")
+    .setDescription("登録している辞書データを指定された形式で出力します")
     .addStringOption(option => (
       option
         .setName("format")
@@ -32,7 +32,7 @@ module.exports = {
     const dictJson = JSON.stringify(getDictData, undefined, "  ");
 
     if (!getDictData) {
-      return await interaction.reply({ content: ":warning: 辞書が登録されていません", flags: MessageFlags.Ephemeral });
+      return await interaction.reply({ content: ":warning: 辞書が登録されていません。", flags: MessageFlags.Ephemeral });
     }
     if (type === "json") {
       await interaction.reply({ content: ":white_check_mark: 出力完了！", files: [new AttachmentBuilder(Buffer.from(dictJson), { name: `${guildId}.json` })] });

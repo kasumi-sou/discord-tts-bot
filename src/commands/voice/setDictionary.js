@@ -9,7 +9,7 @@ module.exports = {
   once: false,
   data: new SlashCommandBuilder()
     .setName("set_dictionary")
-    .setDescription("辞書を設定します")
+    .setDescription("辞書を設定します (既に登録済の単語の場合上書きされます)")
     .addStringOption((option) => (
       option
         .setName("word")
