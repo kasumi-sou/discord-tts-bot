@@ -1,6 +1,6 @@
 "use strict";
 
-const { SlashCommandBuilder, Events, MessageFlags } = require("discord.js");
+const { SlashCommandBuilder, Events } = require("discord.js");
 // botのギルドデータ取得
 const { dict: dictData } = require("../../data");
 
@@ -34,7 +34,9 @@ module.exports = {
         .setDescriptionLocalizations({
           "ja": "優先度",
         })
-        .setDescription("読み方の優先度(1~10000の間で指定してください (指定しない場合 5000 で設定されます)")
+        .setDescription("読み方の優先度(1~10000の整数で指定してください (指定しない場合 5000 で設定されます)")
+        .setMinValue(1)
+        .setMaxValue(10000)
     )),
   /**
    * @type {(interaction: import("discord.js").CommandInteraction) => Promise<void>}
@@ -47,10 +49,6 @@ module.exports = {
     if (!weight) {
       // 重みが指定されなかった場合のデフォルト値(5000)
       weight = 5000;
-    }
-    // eslint-disable-next-line yoda
-    else if (weight < 1 || 10000 < weight) {
-      return await interaction.reply({ content: ":warning: **値が不正です！**", flags: MessageFlags.Ephemeral });
     }
 
     const guildId = interaction.guildId;
