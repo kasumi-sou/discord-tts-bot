@@ -7,7 +7,7 @@ const si = require("systeminformation");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("sys_info")
-    .setDescription("BOTを実行してるサーバーに関する情報を表示します")
+    .setDescription("BOTを実行してるサーバーに関する情報を表示します(BOTをDocker上で実行している場合、一部の情報が表示されません)")
     .addStringOption(option =>
       option
         .setName("option")
