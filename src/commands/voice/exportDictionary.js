@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, Events, MessageFlags, AttachmentBuilder } = require("discord.js");
+const { SlashCommandBuilder, Events, AttachmentBuilder, MessageFlags } = require("discord.js");
 // const fs = require("fs");
 
 // botのギルドデータ取得
@@ -26,16 +26,15 @@ module.exports = {
    * @type {(interaction: import("discord.js").CommandInteraction) => Promise<void>}
    */
   async execute(interaction) {
-    const type = interaction.options.getString("format");
-    const guildId = interaction.guildId;
-    const getDictData = dictData.get(guildId);
-    const dictJson = JSON.stringify(getDictData, undefined, "  ");
+    const format = interaction.options.getString("format");
+    const attachment = dictData.export(guildId, format);
 
-    if (!getDictData) {
-      return await interaction.reply({ content: ":warning: 辞書が登録されていません。", flags: MessageFlags.Ephemeral });
+    if (!attachment) {
+      await interaction.reply({ content: ":warning: 何らかのエラーが発生しました", flags: MessageFlags.Ephemeral });
+      return;
     }
-    if (type === "json") {
-      await interaction.reply({ content: ":white_check_mark: 出力完了！", files: [new AttachmentBuilder(Buffer.from(dictJson), { name: `${guildId}.json` })] });
+    if (format === "json") {
+      await interaction.reply({ content: ":white_check_mark: 出力完了！", files: [new AttachmentBuilder(Buffer.from(attachment), { name: `${guildId}.json` })] });
     }
   },
 };
