@@ -91,5 +91,17 @@ module.exports = {
 
       return true;
     },
+    import(guildId, file) {
+      const result = dictMap.set(guildId, file);
+      fs.writeFileSync(getGuildDictPath(guildId), JSON.stringify(file), "utf-8");
+      return result;
+    },
+    export(guildId, format) {
+      const dict = module.exports.dict.get(guildId);
+      if (format === "json") {
+        const dictJson = JSON.stringify(dict, undefined, "  ");
+        return dictJson;
+      }
+    },
   },
 };
