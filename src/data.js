@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require("fs");
+const Ajv = require("ajv");
 
 const guildMap = new Map();
 let userMap = new Map();
@@ -92,9 +93,35 @@ module.exports = {
       return true;
     },
     import(guildId, file) {
-      const result = dictMap.set(guildId, file);
+      const ajv = new Ajv();
+      const schema = { type: "array",
+        items: {
+          required: ["word", "read", "weight"],
+          type: "object",
+          properties: {
+            word: {
+              type: "string",
+            },
+            read: {
+              type: "string",
+            },
+            weight: {
+              type: "integer",
+              minimum: 1,
+              maximum: 10000,
+            },
+          },
+        },
+      };
+      const validate = ajv.compile(schema);
+      const valid = validate(file);
+      if (!valid) {
+        return false;
+      }
+
+      dictMap.set(guildId, file);
       fs.writeFileSync(getGuildDictPath(guildId), JSON.stringify(file), "utf-8");
-      return result;
+      return true;
     },
     export(guildId, format) {
       const dict = module.exports.dict.get(guildId);

@@ -16,6 +16,7 @@
     "@discordjs/voice": "^0.18.0",
     "@koozaki/romaji-conv": "^2.0.30",
     "@mtripg6666tdr/async-lock": "^1.1.0",
+    "ajv": "^8.17.1",
     "axios": "^1.8.2",
     "discord.js": "^14.18.0",
     "googleapis": "^146.0.0",
