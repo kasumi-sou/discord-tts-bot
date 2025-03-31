@@ -25,6 +25,8 @@ module.exports = {
 
     const option = interaction.options.getString("option");
 
+    const embeds = [];
+
     if (option === "cpu") {
       const cpuDetails = os.cpus();
       const processorInfo = [];
@@ -38,9 +40,9 @@ module.exports = {
         .setTitle("CPU 情報")
         .addFields(...processorInfo);
 
-      await interaction.followUp({ embeds: [cpuEmbed] });
+      embeds.push(cpuEmbed);
     }
-    if (option === "mem") {
+    else if (option === "mem") {
       const memDetails = await si.memLayout();
       const memInfo = [];
       const freeMem = os.freemem();
@@ -58,21 +60,21 @@ module.exports = {
         .setDescription(`空きメモリ: \`${(freeMem / (1024 ** 3)).toFixed(1)}\` GB\n使用中メモリ: \`${((totalMem - freeMem) / (1024 ** 3)).toFixed(1)}\` GB\n合計メモリ: \`${(totalMem / (1024 ** 3)).toFixed(1)}\` GB\n使用率: \`${((totalMem - freeMem) * 100 / totalMem).toFixed(2)}\`%`)
         .addFields(...memInfo);
 
-      await interaction.followUp({ embeds: [memEmbed] });
+      embeds.push(memEmbed);
     }
-    if (option === "gpu") {
+    else if (option === "gpu") {
       const { controllers: gpuDetails } = await si.graphics();
       const gpuInfo = [];
       gpuDetails.forEach((gpu, index) => {
         // eslint-disable-next-line no-irregular-whitespace
         gpuInfo[index] = { name: `GPU${index}`, value: `型番: ${gpu?.model} (${gpu?.vram ? gpu.vram / 1024 : "-"} GB)\nVRAM\n\u200b　空き: \`${gpu?.memoryFree || "-"}\`MB\n\u200b　使用中: \`${gpu?.memoryUsed || "-"}\`MB\n\u200b　合計: \`${gpu?.memoryTotal || "-"}\` MB\n\u200b　使用率: \`${gpu?.memoryUsed && gpu?.memoryTotal ? (gpu.memoryUsed * 100 / gpu.memoryTotal).toFixed(2) : "-"}\`%\nGPU温度: \`${gpu?.temperatureGpu || "-"}\` ℃\n消費電力: \`${gpu?.powerDraw || "-"}\` W\n速度\n\u200b　コア: \`${gpu?.clockCore || "-"}\` MHz\n\u200b　メモリ: \`${gpu?.clockMemory || "-"}\` MHz` };
       });
-      const memEmbed = new EmbedBuilder()
+      const gpuEmbed = new EmbedBuilder()
         .setColor(0xffdbed)
         .setTitle("GPU 情報")
         .addFields(...gpuInfo);
 
-      await interaction.followUp({ embeds: [memEmbed] });
+      embeds.push(gpuEmbed);
     }
     else {
       const [cpu, { controllers: [gpu] }, freeMem, totalMem] = await Promise.all([
@@ -91,7 +93,8 @@ module.exports = {
           { name: "GPU", value: `\`${gpu.model} (${gpu.vram / 1024} GB)\`` },
         );
 
-      await interaction.followUp({ embeds: [infoEmbed] });
+      embeds.push(infoEmbed);
     }
+    await interaction.followUp({ embeds: embeds });
   },
 };
