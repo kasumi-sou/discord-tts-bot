@@ -107,3 +107,13 @@
 - axios 更新(`1.7.9` => `1.8.2`)([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0fe256a155dd25a8f7dcf00c1691b5f06607ad05))
 - ajv 追加([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0c1392847dc8f3332c60b98315d2057273d3ca24))
 - googleapis 追加 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/40836b164c2b627e6aa19bd6ebd7cd1005dc1761))
+
+# 0.3.1
+
+## バグ修正
+
+## その他の追加・変更
+
+- `package.json` のバージョンを `0.3.1` に変更 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/e9f86a404e7275f9ceeb467450513c1104eb8132))
+- `updateEmbed.js` の更新 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/918e5a6d0306ddaeb0d1224871512c8b636b0980))
+- `help.js` 内のアップデート通知有効期限を変更 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/cc516b5845d489a8b4692d061f7b93b23c8d1e04))
