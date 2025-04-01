@@ -24,7 +24,7 @@ module.exports = {
       .setFooter({ text: `${interaction.guild.members.me.displayName} / version: ${version}`, iconURL: interaction.guild.members.me.displayAvatarURL() });
 
     const unixNowTime = Date.now();
-    const expTime = new Date("2025/2/27 0:00:00 GMT+9").getTime();
+    const expTime = new Date("2025/4/16 0:00:00 GMT+9").getTime();
 
     // expTimeまではコマンド実行時に新機能エンベッドを追加
     if (unixNowTime > expTime) {
