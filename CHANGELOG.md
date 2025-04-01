@@ -96,9 +96,8 @@
 - 厳格モードを使用
 - ステータスを一定時間ごとに変更 (10秒)
 - コメントを適宜追加
-- デバッグプロファイルを追加 (`.vscode` フォルダ)
 - npmスクリプトを設定
-- vscodeデバッグプロファイルを設定
+- vscodeデバッグプロファイルを設定 (`.vscode` フォルダ)
 - ファイル構造を変更([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0d1257ccfec16e969c23d5777835ba90b9cf9220))
 - インデントをスペースに変更
 
@@ -107,3 +106,4 @@
 - discord.js 更新(`14.17.3` => `14.18.0`)([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/e7332e73872ba6ecca58d8091c44b687b0cd5ed7))
 - axios 更新(`1.7.9` => `1.8.2`)([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0fe256a155dd25a8f7dcf00c1691b5f06607ad05))
 - ajv 追加([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0c1392847dc8f3332c60b98315d2057273d3ca24))
+- googleapis 追加 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/40836b164c2b627e6aa19bd6ebd7cd1005dc1761))
