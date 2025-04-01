@@ -8,10 +8,14 @@ module.exports = new EmbedBuilder()
   .setDescription(`${version}にアップデートされました！新機能の一部をご紹介します！`)
   .addFields(
     { name: "\n", value: "\n" },
-    { name: "ヘルプを表示します。", value: "```/help```" },
-    { name: "コマンド一覧を表示します。", value: "```/command```" },
-    { name: "読み上げの声を設定します。", value: "```/set_voice```" },
-    { name: "アバター画像を表示します。", value: "```/avatar```" },
+    { name: "読み上げの声をいろいろ設定できます。", value: "```/set_...```" },
+    { name: "読み上げ辞書を設定します。", value: "```/set_dictionary```" },
+    { name: "読み上げ辞書を削除します。", value: "```/remove_dictionary```" },
+    { name: "読み上げ辞書を登録します。", value: "```/import_dictionary```" },
+    { name: "登録済の読み上げ辞書を出力します。", value: "```/export_dictionary```" },
+    { name: "登録済の読み上げ辞書を表示します。", value: "```/dictionary```" },
+    { name: "Google検索をします。", value: "```/google```" },
+    { name: "BOTをホストしているサーバーの情報を表示。", value: "```/sys_info```" },
     { name: "\n", value: "\n" },
     { name: "その他の更新についてはこちらをご覧ください！", value: `https://github.com/kasumi-sou/discord-tts-bot/releases/v${version}` },
   );
