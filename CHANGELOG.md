@@ -48,3 +48,62 @@
 ## 依存関係更新
 
 無し
+
+# 0.3.0
+
+## 機能追加
+
+### ボイス関連
+
+- `/set_intonation` で全体の抑揚を設定します
+- `/set_pitch` で全体の声高を設定します
+- `/set_speed` で全体の話速を設定します
+- `/set_volume` で全体の音量を設定します
+- `/voice` で現在設定中のキャラクターと話し方を取得します
+- `/ずんだもんモード` でずんだもんモードを有効/無効にします
+  - 送信したメッセージの最後に `のだ` を自動で付加し、読み上げます
+- `/set_dictionary` で読み上げ辞書を設定します
+- `/remove_dictionary` で読み上げ辞書を削除します
+- `/import_dictionary` で読み上げ辞書を登録します
+- `/export_dictionary` で登録済の読み上げ辞書を出力します
+- `/dictionary` で登録済の読み上げ辞書を表示します
+- `AivisSpeech` に対応 (未インストールの場合選択不可)
+- 既にオーディオプレイヤーがある場合それを再利用
+- BOTの接続時とメンバーの接続時にボイスモデルを事前読み込み
+- 事前に設定した辞書通りに読み上げするように変更
+
+### その他
+
+- `/license` で本BOTの利用規約及びライセンスを表示
+- `/google` でGoogle検索をします(本実装)(事前にGoogleSearchAPIの設定が必要)
+- `/sys_info` でBOTをホストしているサーバーの情報を表示(`CPU`, `memory`, `GPU`のオプション有)(Docker環境下では一部オプションが正常動作しない)
+
+## 機能変更・修正
+
+- ユーザーデータの保存形式を変更 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/94e9267cb923bff367d24ca934c94ac4497a5e63))
+- 変換する文字列を追加 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/17dd3d210c139e9fbfc2c771752a5bfc4b5d0a95))
+- バージョン情報を`package.json`から取得するように変更
+- `dict` オブジェクトに`get`, `set`, `delete`, `import`, `export` メソッドを追加
+
+## バグ修正
+
+- 切断時に接続済ボイスチャンネルMapから完全に削除されないことがあるのを修正
+- エラー発生時にBOTがダウンしないように修正
+- 何らかの要因でボイスチャンネルから切断時に接続していたボイスチャンネルが見つからずエラーが発生するのを修正
+
+## その他の追加・変更
+
+- 厳格モードを使用
+- ステータスを一定時間ごとに変更 (10秒)
+- コメントを適宜追加
+- デバッグプロファイルを追加 (`.vscode` フォルダ)
+- npmスクリプトを設定
+- vscodeデバッグプロファイルを設定
+- ファイル構造を変更([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0d1257ccfec16e969c23d5777835ba90b9cf9220))
+- インデントをスペースに変更
+
+## 依存関係更新
+
+- discord.js 更新(`14.17.3` => `14.18.0`)([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/e7332e73872ba6ecca58d8091c44b687b0cd5ed7))
+- axios 更新(`1.7.9` => `1.8.2`)([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0fe256a155dd25a8f7dcf00c1691b5f06607ad05))
+- ajv 追加([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/0c1392847dc8f3332c60b98315d2057273d3ca24))
