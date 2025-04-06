@@ -1,0 +1,7 @@
+.data
+.vscode
+node_modules
+config.json
+deploy-commands.js
+eslint*
+utils/noticeUpdate.js
