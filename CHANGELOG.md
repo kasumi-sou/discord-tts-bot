@@ -117,3 +117,16 @@
 - `package.json` のバージョンを `0.3.1` に変更 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/e9f86a404e7275f9ceeb467450513c1104eb8132))
 - `updateEmbed.js` の更新 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/918e5a6d0306ddaeb0d1224871512c8b636b0980))
 - `help.js` 内のアップデート通知有効期限を変更 ([詳細](https://github.com/kasumi-sou/discord-tts-bot/commit/cc516b5845d489a8b4692d061f7b93b23c8d1e04))
+
+# 0.3.2
+
+## バグ修正
+
+- `.data` フォルダ内に `dictionary` フォルダがない場合、エラーになり辞書登録できないのを修正
+  - ない場合に自動でフォルダを作成するように
+
+## 機能追加
+
+### その他
+
+- Dockerファイルを追加
