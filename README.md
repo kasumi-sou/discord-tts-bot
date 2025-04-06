@@ -110,7 +110,7 @@ Node.js, Discord.js, Docker, VOICEVOX 等を使用します。
 
 1. AivisSpeech インストール,サーバ起動
 
-    Docker上でサーバーを起動する場合は以下の通りです。(Docker以外でも可)
+    Docker上でサーバーを起動する場合は以下の通りです。(Docker以外でも可)([詳細](https://github.com/Aivis-Project/AivisSpeech-Engine?tab=readme-ov-file#%E5%B0%8E%E5%85%A5%E6%96%B9%E6%B3%95))
 
     CPU
 
