@@ -17,6 +17,11 @@ else if (fs.existsSync(userPath)) {
   const userJson = JSON.parse(fs.readFileSync(userPath, "utf-8"));
   userMap = new Map(userJson);
 }
+
+if (!fs.existsSync("./.data/dictionary")) {
+  fs.mkdirSync("./.data/dictionary");
+}
+
 module.exports = {
   guild: {
     get(key) {
