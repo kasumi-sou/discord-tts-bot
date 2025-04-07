@@ -4,6 +4,7 @@
 const generateAudio = require("./generateAudio");
 const playVoice = require("./playVoice");
 const convertMessages = require("./convertMessages");
+const convertText = require("./convertText");
 
 module.exports = {
   async playMessage(message) {
@@ -13,7 +14,8 @@ module.exports = {
     // fs.unlinkSync(audioResource);
   },
   async playText(text, guildId) {
-    const audioResource = await generateAudio(text);
+    const textContent = convertText(text, guildId);
+    const audioResource = await generateAudio(textContent);
     await playVoice(audioResource, guildId);
   },
 };
