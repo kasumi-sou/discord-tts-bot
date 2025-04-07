@@ -61,7 +61,7 @@ module.exports = {
             else {
               const connection = getVoiceConnection(guildId);
               await textChannel.send(`:wave: **${vcChannel.name}** から誰もいなくなってから5分経過したため退出しました。`);
-              guildData.get(guildId).channel = null;
+              guildData.set(guildId, { channel: null });
               connection?.destroy();
             }
             // eslint-disable-next-line no-inline-comments
