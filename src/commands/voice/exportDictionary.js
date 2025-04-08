@@ -27,6 +27,7 @@ module.exports = {
    */
   async execute(interaction) {
     const format = interaction.options.getString("format");
+    const guildId = interaction.guild.id;
     const attachment = dictData.export(guildId, format);
 
     if (!attachment) {
