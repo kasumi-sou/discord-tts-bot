@@ -45,6 +45,7 @@ module.exports = {
     const attachment = interaction.options.getAttachment("dictionary_file");
     const url = attachment.url;
 
+    // 警告文
     const alertEmbed = new EmbedBuilder()
       .setColor(0xffdbed)
       .setDescription(":warning: インポートすると、既存の辞書は上書きされます。\nインポートの前に、既存の辞書をエクスポートしますか？\n-# 10分経過後に自動でキャンセルされます。");
@@ -58,6 +59,7 @@ module.exports = {
         const formatSelectCustomId = "format";
         const optionJsonValue = "json";
 
+        // 下部セレクトメニュー
         const formatSelectMenu = new StringSelectMenuBuilder()
           .setCustomId(formatSelectCustomId)
           .setPlaceholder("辞書データの出力形式を選択してください")
@@ -67,6 +69,7 @@ module.exports = {
               .setDescription("json形式のデータ")
               .setValue(optionJsonValue),
           );
+        // 出力形式選択エンベッド
         const formatSelectEmbed = new EmbedBuilder()
           .setColor(0xffdbed)
           .setDescription("登録している辞書データを指定された形式で出力します\n-# 10分経過後に自動でキャンセルされます。");
@@ -78,6 +81,7 @@ module.exports = {
         const selectMenuCollector = response.resource.message.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 10 * 60 * 1000 });
 
         selectMenuCollector.on("collect", async selectMenuInteraction => {
+          // 辞書出力
           const format = selectMenuInteraction.component.options[0].value;
           const exportFile = dictData.export(guildId, format);
           if (!exportFile) {
@@ -100,7 +104,11 @@ module.exports = {
     });
 
     collector.on("end", async () => {
-      await response.resource.message.edit({ components: [] });
+      // 10分経過後
+      const cancelEmbed = new EmbedBuilder()
+        .setColor(0xffdbed)
+        .setDescription(":x: 操作をキャンセルしました！");
+      await response.resource.message.edit({ embeds: [cancelEmbed], components: [] });
     });
 
     // 辞書インポート

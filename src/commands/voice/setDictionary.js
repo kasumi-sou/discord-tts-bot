@@ -42,7 +42,7 @@ module.exports = {
    * @type {(interaction: import("discord.js").CommandInteraction) => Promise<void>}
    */
   async execute(interaction) {
-    const word = interaction.options.getString("word");
+    const word = interaction.options.getString("word").toLowerCase();
     const read = interaction.options.getString("read");
     let weight = interaction.options.getInteger("weight");
 

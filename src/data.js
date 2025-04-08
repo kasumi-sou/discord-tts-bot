@@ -124,6 +124,9 @@ module.exports = {
         return false;
       }
 
+      file.forEach(element => {
+        element.word = element.word.toLowerCase();
+      });
       dictMap.set(guildId, file);
       fs.writeFileSync(getGuildDictPath(guildId), JSON.stringify(file), "utf-8");
       return true;
