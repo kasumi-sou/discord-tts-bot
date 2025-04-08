@@ -61,7 +61,7 @@ module.exports = {
             else {
               const connection = getVoiceConnection(guildId);
               await textChannel.send(`:wave: **${vcChannel.name}** から誰もいなくなってから5分経過したため退出しました。`);
-              guildData.set(guildId, { channel: null });
+              guildData.set(guildId, { channel: null, player: null });
               connection?.destroy();
             }
             // eslint-disable-next-line no-inline-comments
@@ -79,7 +79,7 @@ module.exports = {
       if (!newState.channelId) {
         if (guildData.get(guildId)?.channel) {
           await textChannel.send(`:pleading_face:  **${connectedChannelNameOld}** から強制的に切断されました。`);
-          guildData.set(guildId, { channel: null });
+          guildData.set(guildId, { channel: null, player: null });
         }
       }
     }

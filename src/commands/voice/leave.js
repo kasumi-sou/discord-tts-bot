@@ -32,7 +32,7 @@ module.exports = {
     else if (connection) {
       // 切断処理
       // ギルドデータにの接続済ボイスチャンネルをnullにセット
-      guildData.set(guild.id, { channel: null });
+      guildData.set(guild.id, { channel: null, player: null });
       // 接続破棄
       connection?.destroy();
       interaction.reply(`:wave: **${connectedChannel.name}** から切断しました!`);

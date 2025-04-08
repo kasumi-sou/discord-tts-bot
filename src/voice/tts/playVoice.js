@@ -1,6 +1,6 @@
 "use strict";
 
-const { createAudioPlayer, NoSubscriberBehavior, getVoiceConnection, entersState, AudioPlayerStatus } = require("@discordjs/voice");
+const { createAudioPlayer, NoSubscriberBehavior, getVoiceConnection, entersState, AudioPlayerStatus, VoiceConnectionStatus } = require("@discordjs/voice");
 const { guild: guildData } = require("../../data");
 const { LockObj, lock } = require("@mtripg6666tdr/async-lock");
 // const locker = new LockObj();
@@ -36,12 +36,15 @@ module.exports = async function play(audioResource, guildId) {
       // プレイヤーがない場合は作成
       connection.subscribe(player);
       // Mapにプレイヤーをセット
-      guildData.set(guildId, { player: player });
+      guildData.set(guildId, { player });
     }
 
     player.play(audioResource);
 
+    const abortController = new AbortController();
+
     // eslint-disable-next-line no-inline-comments
-    await entersState(player, AudioPlayerStatus.Idle, 60000 /* 」1分*/ * 60/* 」60分 */);
+    await Promise.race([entersState(player, AudioPlayerStatus.Idle, 60000 /* 」1分*/ * 60/* 」60分 */), entersState(connection, VoiceConnectionStatus.Destroyed, abortController.signal)]);
+    abortController.abort();
   });
 };
