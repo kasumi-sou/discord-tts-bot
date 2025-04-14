@@ -14,6 +14,13 @@ const romajiConv = require("@koozaki/romaji-conv");
 module.exports = function(message) {
   let messageContent = message.cleanContent.toLowerCase();
 
+  // 語尾の ｗ や w の変換
+  messageContent = messageContent
+    .replace(/(?<=[^\w])[wｗ]$/im, "、わら")
+    .replace(/(?<=[^\w])[wｗ]{2,}$/im, "、わらわら")
+    .replace(/^[wｗ]$/im, "、わら")
+    .replace(/^[wｗ]{2,}$/im, "、わらわら");
+
   // ローマ字を日本語読み上げ (ex: hoge -> ほげ)
   if (messageContent.match(/^(([lx]?(([kstnhmyrwdpfjzvcbg])\4?)?[yhs]?[aiueo])|n|nn|（）|\(\)|？|\?|-)+[wｗ]*$/)) {
     messageContent = romajiToHiragana(messageContent);
@@ -102,7 +109,6 @@ module.exports = function(message) {
   if (memberData?.zundamonMode) {
     messageContent += "なのだ！";
   }
-
   return messageContent;
 };
 
