@@ -2,7 +2,8 @@
 
 const { Events, SlashCommandBuilder } = require("discord.js");
 const { default: axios } = require("axios");
-const rpc = axios.create({ baseURL: "http://localhost:50021", proxy: false });
+const rpcVoiceVox = axios.create({ baseURL: "http://localhost:50021", proxy: false });
+const rpcAivis = axios.create({ baseURL: "http://localhost:10101", proxy: false });
 const { user: userData } = require("../../data");
 module.exports = {
   name: Events.InteractionCreate,
@@ -18,7 +19,7 @@ module.exports = {
 
     if (userData.has(memberId)) {
       const styleId = userData.get(memberId).style;
-      const charaMap = await getChara();
+      const charaMap = await getChara(styleId);
       const charaObj = charaMap.find(chara => chara.styles.find(style => (style.id === styleId)));
       const styleObj = charaObj.styles.find(style => (style.id === styleId));
       const charaName = charaObj.name;
@@ -35,19 +36,33 @@ module.exports = {
 
 
 let charaCache = null;
-async function getChara() {
+async function getChara(styleId) {
   if (charaCache) {return charaCache;}
-  const coreVersions = await rpc.get("core_versions", {
-    heders: {
-      "accept": "application/json",
-    },
-  });
-  // console.log(coreVersions.data.toString());
-  const speakerList = await rpc.get(`speakers?core_version=${coreVersions.data.toString()}`, {
-    heders: {
-      "accept": "application/json",
-    },
-  });
-  // console.log(speakerList.data);
-  return charaCache = speakerList.data;
+  const styleIdDigit = styleId.toString().length;
+  if (styleIdDigit <= 2) {
+    const coreVersions = await rpcVoiceVox.get("core_versions", {
+      heders: {
+        "accept": "application/json",
+      },
+    });
+    const speakerList = await rpcVoiceVox.get(`speakers?core_version=${coreVersions.data.toString()}`, {
+      heders: {
+        "accept": "application/json",
+      },
+    });
+    return charaCache = speakerList.data;
+  }
+  else if (styleIdDigit > 2) {
+    const coreVersions = await rpcAivis.get("core_versions", {
+      heders: {
+        "accept": "application/json",
+      },
+    });
+    const speakerList = await rpcAivis.get(`speakers?core_version=${coreVersions.data.toString()}`, {
+      heders: {
+        "accept": "application/json",
+      },
+    });
+    return charaCache = speakerList.data;
+  }
 };
