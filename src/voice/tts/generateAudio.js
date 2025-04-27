@@ -18,7 +18,7 @@ module.exports = async function readMessages(messageContent, userId) {
 
     let styleId = userData.get(userId)?.style;
     // 6は四国めたん
-    const defaultVoice = "6";
+    const defaultVoice = 6;
 
     // voiceIdがない場合(そもそも設定してない or 入退出通知のときはデフォルトボイス)
     if (!styleId) {styleId = defaultVoice;}
