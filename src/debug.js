@@ -1,3 +1,5 @@
+"use_strict";
+
 const { debugMode } = require("../config.json");
 
 module.exports = {
