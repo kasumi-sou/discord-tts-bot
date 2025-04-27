@@ -56,9 +56,7 @@ module.exports = {
 
         // ボイスチャンネルに参加済みのメンバーidと対応するstyleIdの取得
         const memberId = item.user.id;
-        const styleId = userData.get(memberId)?.style;
-
-        if (!styleId) {return;};
+        const styleId = userData.get(memberId)?.style || 6;
 
         // styleIdの桁数でvoicevoxとaivisの判別
         const styleIdDigit = styleId.toString().length;
