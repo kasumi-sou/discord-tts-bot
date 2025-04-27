@@ -8,6 +8,7 @@ WORKDIR /app
 COPY --link package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
+COPY --link ./deploy-commands.js ./
 COPY --link ./src ./src
 COPY --link ./utils ./utils
 

@@ -1,0 +1,35 @@
+services:
+  bot:
+    image: ghcr.io/kasumi-sou/discord-tts-bot:latest
+    volumes:
+      - type: bind
+      # config.jsonのパスを指定してください(デフォルト: ./config.json)
+        source: ./config.json
+        target: /app/config.json
+      - type: bind
+        # 変更したければご自由に
+        source: ./.data
+        target: /app/.data
+    network_mode: host
+
+  voicevox:
+    # GPU(Nvidia)を使用する場合は次の行のコメントアウトを外し、次々行をコメントアウトしてください
+    # image: voicevox/voicevox_engine:nvidia-latest
+    image: voicevox/voicevox_engine:cpu-latest
+    ports:
+      - 50021:50021
+
+  aivis:
+    # GPU(Nvidia)を使用する場合は次の行のコメントアウトを外し、次々行をコメントアウトしてください
+    # image: ghcr.io/aivis-project/aivisspeech-engine:nvidia-latest
+    image: ghcr.io/aivis-project/aivisspeech-engine:cpu-latest
+    ports:
+      - 10101:10101
+    volumes:
+      - type: bind
+        #aivisのキャッシュファイルを保存するフォルダを指定してください(デフォルト: ./cache)
+        source: ./cache
+        target: /home/user/.local/share/AivisSpeech-Engine-Dev
+
+volumes:
+  AivisSpeech-Engine:
