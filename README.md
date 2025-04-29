@@ -18,6 +18,7 @@ Node.js, Discord.js, Docker, VOICEVOX 等を使用します。
 - 指定ユーザーのアバター画像を表示
 - BOTをホストしているサーバーの情報を表示
 - ステータスメッセージでコマンドを紹介
+- デバッグモード
 
 ## Commands
 
@@ -49,7 +50,95 @@ Node.js, Discord.js, Docker, VOICEVOX 等を使用します。
 - `/google` : Google検索をします(本実装)(事前にGoogleSearchAPIの設定が必要)
 - `/sys_info` : BOTをホストしているサーバーの情報を表示(`CPU`, `memory`, `GPU`のオプション有)(Docker環境下では一部オプションが正常動作しません)
 
+## 既知のバグ
+
+- 不定期にエラーなしに勝手に切断される問題 (#8)
+- 不定期(高頻度)にずっと話し中状態になり音声が再生されなくなる問題 (#9)
+
 ## How to install
+
+何個か方法があるのでお好きな方法でインストールしてください。
+
+上から順におすすめ順になっています。
+
+(注) インストールには**約10GBの空き容量が必要**です。推奨スペック(独断)については以下をご覧ください。
+
+<details>
+<summary>推奨スペック</summary>
+
+### CPUモード
+
+- CPU: インテル® Core™ i7 プロセッサー 8th Gen 以上 / AMD Ryzen™ 7 5700 以上
+- RAM: 16GB 以上
+
+### GPUモード
+
+- CPU: インテル® Core™ i7 プロセッサー 8th Gen 以上 / AMD Ryzen™ 7 5700 以上
+- RAM: 16GB 以上
+- GPU: NVIDIA GTX 1060 (6GB) 以上
+
+(GPUはRTX3080Ti以上、RAMは32GBくらいあると幸せになれるかも...)
+
+</details>
+
+### Docker Composeを使用
+
+1. `config.json` を作成
+
+    ```json
+    {
+      "token": "BOTのtoken",
+      "clientId": "BOTのclientId"
+    }
+    ```
+
+1. [Docker](https://www.docker.com/)をインストール
+
+1. `compose.yml` を編集 (NVIDIA製ではないGPUを搭載している場合は、CPUを選択してください)
+
+    ``` yml
+      ...
+
+        - type: bind
+        # config.jsonのパスを指定してください(デフォルト: "./config.json")
+          source: ./config.json
+          target: /app/config.json
+        - type: bind
+          # 変更したければご自由に
+          source: ./.data
+
+      ...
+
+    voicevox:
+      # GPU(Nvidia)を使用する場合は次の行のコメントアウトを外し、次々行をコメントアウトしてください
+      # image: voicevox/voicevox_engine:nvidia-latest
+      image: voicevox/voicevox_engine:cpu-latest
+
+      ...
+
+    aivis:
+      # GPU(Nvidia)を使用する場合は次の行のコメントアウトを外し、次々行をコメントアウトしてください
+      # image: ghcr.io/aivis-project/aivisspeech-engine:nvidia-latest
+      image: ghcr.io/aivis-project/aivisspeech-engine:cpu-latest
+
+      ...
+
+          #aivisのキャッシュファイルを保存するフォルダを指定してください(デフォルト:cache)
+          source: ./cache
+          target: /home/user/.local/share/AivisSpeech-Engine-Dev
+
+      ...
+
+    ```
+
+1. 以下のコマンドを実行
+
+    ```sh
+    cd "compose.ymlを配置したディレクトリ"
+    docker compose up
+    ```
+
+### クローンして実行(windows)
 
 1. FFmpegをインストール
 
@@ -139,7 +228,7 @@ Node.js, Discord.js, Docker, VOICEVOX 等を使用します。
 1. GoogleCustomSearchAPIキーとエンジンIDを取得します
 
     やり方が分からない場合、[ここ](https://qiita.com/zak_y/items/42ca0f1ea14f7046108c)の1章から3章を行ってください
-2. `config.json` を変更
+2. `config.json` に `googleApiKey` と `engineId` を追加し適宜設定
 
     ```json
     {
@@ -150,9 +239,23 @@ Node.js, Discord.js, Docker, VOICEVOX 等を使用します。
     }
     ```
 
-## How to Update
+### デバッグモードの有効化
 
-1. 以下のコマンドを実行
+1. `config.json` に `debugMode` を追加し、`true` or `false` を設定
+
+    ```json
+    {
+      "token": "BOTのtoken",
+      "clientId": "BOTのclientId",
+      "googleApiKey": "GoogleCustomSearchAPIキー",
+      "engineId": "エンジンID",
+      "debugMode": true
+    }
+    ```
+
+   ## How to Update
+
+2. 以下のコマンドを実行
 
     ```sh
     # ソース更新
