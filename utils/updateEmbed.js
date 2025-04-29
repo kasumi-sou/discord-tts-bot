@@ -5,7 +5,8 @@ const { version } = require("../package.json");
 module.exports = new EmbedBuilder()
   .setColor(0xffdbed)
   .setTitle(`:tada: アップデート ${version}`)
-  .setDescription(`${version}にアップデートされました！新機能の一部をご紹介します！`)
+  .setDescription(`${version}にアップデートされました！新機能の一部をご紹介します！\n追加のコマンドや大きな変更はありません。\n詳細は以下をご覧ください。\nhttps://github.com/kasumi-sou/discord-tts-bot/releases/v${version}`);
+/*
   .addFields(
     { name: "\n", value: "\n" },
     { name: "読み上げの声をいろいろ設定できます。", value: "```/set_...```" },
@@ -18,4 +19,4 @@ module.exports = new EmbedBuilder()
     { name: "BOTをホストしているサーバーの情報を表示。", value: "```/sys_info```" },
     { name: "\n", value: "\n" },
     { name: "その他の更新についてはこちらをご覧ください！", value: `https://github.com/kasumi-sou/discord-tts-bot/releases/v${version}` },
-  );
+  );*/
