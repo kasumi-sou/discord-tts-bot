@@ -4,3 +4,4 @@ sounds/*
 !sounds/.gitkeep
 .data
 cache
+dist
