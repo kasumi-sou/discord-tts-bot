@@ -33,6 +33,6 @@ module.exports = {
       }
       else { console.error("An unexpected error occurred."); }
     }
-    catch (e) {console.error(e);};
+    catch (e) {console.error(e);}
   },
 };

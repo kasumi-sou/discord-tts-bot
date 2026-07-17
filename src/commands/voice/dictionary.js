@@ -81,50 +81,54 @@ module.exports = {
     const collector = response.resource.message.createMessageComponentCollector({ componentType: ComponentType.Button, time: 10 * 60 * 1000 });
 
     collector.on("collect", async componentInteraction => {
-      await componentInteraction.deferUpdate();
+      try {
+        await componentInteraction.deferUpdate();
 
-      if (componentInteraction.component.customId === addedOrderCustomId) {
-        const addedOrderEmbed2nd = new EmbedBuilder()
-          .setColor(0xffdbed)
-          .setTitle("登録済単語一覧 (登録順)")
-          .setDescription(description)
-          .setFooter(footer());
-        await componentInteraction.editReply({ embeds: [addedOrderEmbed2nd] });
-      }
-      else if (componentInteraction.component.customId === hiraganaOrderCustomId) {
-        const sortedDict = dict.toSorted(sortIntoHiraganaOrder);
-        let hiraganaOrderDescription = "";
-        sortedDict.forEach(element => {
-          hiraganaOrderDescription += `単語: \`${element.word}\` 読み: \`${element.read}\` 優先度: \`${element.weight}\`\n`;
-        });
-        hiraganaOrderDescription += "\n-# 10分経過後に下部のボタンは消えます。";
+        if (componentInteraction.component.customId === addedOrderCustomId) {
+          const addedOrderEmbed2nd = new EmbedBuilder()
+            .setColor(0xffdbed)
+            .setTitle("登録済単語一覧 (登録順)")
+            .setDescription(description)
+            .setFooter(footer());
+          await componentInteraction.editReply({ embeds: [addedOrderEmbed2nd] });
+        }
+        else if (componentInteraction.component.customId === hiraganaOrderCustomId) {
+          const sortedDict = dict.toSorted(sortIntoHiraganaOrder);
+          let hiraganaOrderDescription = "";
+          sortedDict.forEach(element => {
+            hiraganaOrderDescription += `単語: \`${element.word}\` 読み: \`${element.read}\` 優先度: \`${element.weight}\`\n`;
+          });
+          hiraganaOrderDescription += "\n-# 10分経過後に下部のボタンは消えます。";
 
-        const hiraganaOrderEmbed = new EmbedBuilder()
-          .setColor(0xffdbed)
-          .setTitle("登録済単語一覧 (50音順)")
-          .setDescription(hiraganaOrderDescription)
-          .setFooter(footer());
-        await componentInteraction.editReply({ embeds: [hiraganaOrderEmbed] });
-      }
-      else if (componentInteraction.component.customId === weightOrderCustomId) {
-        const sortedDict = dict.toSorted((a, b) => b.weight - a.weight);
-        let weightOrderDescription = "";
-        sortedDict.forEach(element => {
-          weightOrderDescription += `単語: \`${element.word}\` 読み: \`${element.read}\` 優先度: \`${element.weight}\`\n`;
-        });
-        weightOrderDescription += "\n-# 10分経過後に下部のボタンは消えます。";
+          const hiraganaOrderEmbed = new EmbedBuilder()
+            .setColor(0xffdbed)
+            .setTitle("登録済単語一覧 (50音順)")
+            .setDescription(hiraganaOrderDescription)
+            .setFooter(footer());
+          await componentInteraction.editReply({ embeds: [hiraganaOrderEmbed] });
+        }
+        else if (componentInteraction.component.customId === weightOrderCustomId) {
+          const sortedDict = dict.toSorted((a, b) => b.weight - a.weight);
+          let weightOrderDescription = "";
+          sortedDict.forEach(element => {
+            weightOrderDescription += `単語: \`${element.word}\` 読み: \`${element.read}\` 優先度: \`${element.weight}\`\n`;
+          });
+          weightOrderDescription += "\n-# 10分経過後に下部のボタンは消えます。";
 
-        const weightOrderEmbed = new EmbedBuilder()
-          .setColor(0xffdbed)
-          .setTitle("登録済単語一覧 (優先度順)")
-          .setDescription(weightOrderDescription)
-          .setFooter(footer());
-        await componentInteraction.editReply({ embeds: [weightOrderEmbed] });
+          const weightOrderEmbed = new EmbedBuilder()
+            .setColor(0xffdbed)
+            .setTitle("登録済単語一覧 (優先度順)")
+            .setDescription(weightOrderDescription)
+            .setFooter(footer());
+          await componentInteraction.editReply({ embeds: [weightOrderEmbed] });
+        }
+      } catch (e) {
+        console.error(e);
       }
     });
 
     collector.on("end", async () => {
-      await response.resource.message.edit({ components: [] });
+      try {await response.resource.message.edit({ components: [] });} catch (e) {console.error(e);}
     });
   },
 };

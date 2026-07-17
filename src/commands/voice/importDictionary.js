@@ -18,7 +18,6 @@ module.exports = {
    * @type {(interaction: import("discord.js").CommandInteraction) => Promise<void>}
    */
   async execute(interaction) {
-
     const guildId = interaction.guildId;
     const yesCustomId = "yes";
     const noCustomId = "no";
@@ -54,61 +53,73 @@ module.exports = {
     const collector = response.resource.message.createMessageComponentCollector({ componentType: ComponentType.Button, time: 10 * 60 * 1000 });
 
     collector.on("collect", async componentInteraction => {
-      await componentInteraction.deferUpdate();
-      if (componentInteraction.component.customId === yesCustomId) {
-        const formatSelectCustomId = "format";
-        const optionJsonValue = "json";
+      try {
+        await componentInteraction.deferUpdate();
+        if (componentInteraction.component.customId === yesCustomId) {
+          const formatSelectCustomId = "format";
+          const optionJsonValue = "json";
 
-        // 下部セレクトメニュー
-        const formatSelectMenu = new StringSelectMenuBuilder()
-          .setCustomId(formatSelectCustomId)
-          .setPlaceholder("辞書データの出力形式を選択してください")
-          .addOptions(
-            new StringSelectMenuOptionBuilder()
-              .setLabel("json")
-              .setDescription("json形式のデータ")
-              .setValue(optionJsonValue),
-          );
-        // 出力形式選択エンベッド
-        const formatSelectEmbed = new EmbedBuilder()
-          .setColor(0xffdbed)
-          .setDescription("登録している辞書データを指定された形式で出力します\n-# 10分経過後に自動でキャンセルされます。");
+          // 下部セレクトメニュー
+          const formatSelectMenu = new StringSelectMenuBuilder()
+            .setCustomId(formatSelectCustomId)
+            .setPlaceholder("辞書データの出力形式を選択してください")
+            .addOptions(
+              new StringSelectMenuOptionBuilder()
+                .setLabel("json")
+                .setDescription("json形式のデータ")
+                .setValue(optionJsonValue),
+            );
+          // 出力形式選択エンベッド
+          const formatSelectEmbed = new EmbedBuilder()
+            .setColor(0xffdbed)
+            .setDescription("登録している辞書データを指定された形式で出力します\n-# 10分経過後に自動でキャンセルされます。");
 
-        const formatSelectRow = new ActionRowBuilder()
-          .addComponents(formatSelectMenu);
+          const formatSelectRow = new ActionRowBuilder()
+            .addComponents(formatSelectMenu);
 
-        await componentInteraction.editReply({ embeds: [formatSelectEmbed], components: [formatSelectRow], withResponse: true });
-        const selectMenuCollector = response.resource.message.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 10 * 60 * 1000 });
+          await componentInteraction.editReply({ embeds: [formatSelectEmbed], components: [formatSelectRow], withResponse: true });
+          const selectMenuCollector = response.resource.message.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 10 * 60 * 1000 });
 
-        selectMenuCollector.on("collect", async selectMenuInteraction => {
-          // 辞書出力
-          const format = selectMenuInteraction.component.options[0].value;
-          const exportFile = dictData.export(guildId, format);
-          if (!exportFile) {
-            await interaction.reply({ content: ":warning: 何らかのエラーが発生しました", flags: MessageFlags.Ephemeral });
-            return;
-          }
-          await selectMenuInteraction.reply({ content: ":white_check_mark: 出力完了！", files: [new AttachmentBuilder(Buffer.from(exportFile), { name: `${guildId}.json` })] });
-          importDictionary(selectMenuInteraction);
-        });
-      }
-      else if (componentInteraction.component.customId === noCustomId) {
-        importDictionary(componentInteraction);
-      }
-      else if (componentInteraction.component.customId === cancelCustomId) {
-        const cancelEmbed = new EmbedBuilder()
-          .setColor(0xffdbed)
-          .setDescription(":x: 操作をキャンセルしました！");
-        await componentInteraction.editReply({ embeds: [cancelEmbed], components: [] });
+          selectMenuCollector.on("collect", async selectMenuInteraction => {
+            try {
+              // 辞書出力
+              const format = selectMenuInteraction.component.options[0].value;
+              const exportFile = dictData.export(guildId, format);
+              if (!exportFile) {
+                await interaction.reply({ content: ":warning: 何らかのエラーが発生しました", flags: MessageFlags.Ephemeral });
+                return;
+              }
+              await selectMenuInteraction.reply({ content: ":white_check_mark: 出力完了！", files: [new AttachmentBuilder(Buffer.from(exportFile), { name: `${guildId}.json` })] });
+              await importDictionary(selectMenuInteraction);
+            } catch (e) {
+              console.error(e);
+            }
+          });
+        }
+        else if (componentInteraction.component.customId === noCustomId) {
+          await importDictionary(componentInteraction);
+        }
+        else if (componentInteraction.component.customId === cancelCustomId) {
+          const cancelEmbed = new EmbedBuilder()
+            .setColor(0xffdbed)
+            .setDescription(":x: 操作をキャンセルしました！");
+          await componentInteraction.editReply({ embeds: [cancelEmbed], components: [] });
+        }
+      } catch (e) {
+        console.error(e);
       }
     });
 
     collector.on("end", async () => {
-      // 10分経過後
-      const cancelEmbed = new EmbedBuilder()
-        .setColor(0xffdbed)
-        .setDescription(":x: 操作をキャンセルしました！");
-      await response.resource.message.edit({ embeds: [cancelEmbed], components: [] });
+      try {
+        // 10分経過後
+        const cancelEmbed = new EmbedBuilder()
+          .setColor(0xffdbed)
+          .setDescription(":x: 操作をキャンセルしました！");
+        await response.resource.message.edit({ embeds: [cancelEmbed], components: [] });
+      } catch (e) {
+        console.error(e);
+      }
     });
 
     // 辞書インポート
