@@ -21,7 +21,7 @@
     "discord.js": "^14.26.3",
     "googleapis": "^146.0.0",
     "libsodium-wrappers": "^0.7.15",
-    "systeminformation": "^5.30.8"
+    "systeminformation": "^5.31.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
