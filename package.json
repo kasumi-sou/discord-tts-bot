@@ -19,7 +19,7 @@
     "ajv": "^8.17.1",
     "axios": "^1.16.0",
     "discord.js": "^14.27.0",
-    "googleapis": "^146.0.0",
+    "googleapis": "^173.0.0",
     "libsodium-wrappers": "^0.7.15",
     "systeminformation": "^5.31.7"
   },
