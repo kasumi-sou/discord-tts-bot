@@ -13,7 +13,7 @@
   "license": "MIT",
   "description": "discord-tts-bot",
   "dependencies": {
-    "@discordjs/voice": "^0.18.0",
+    "@discordjs/voice": "^0.19.2",
     "@koozaki/romaji-conv": "^2.0.30",
     "@mtripg6666tdr/async-lock": "^1.1.0",
     "ajv": "^8.17.1",

@@ -35,12 +35,13 @@ module.exports = {
     }
     else if (!connectedChannel) {
       // botがすでにボイスチャンネル参加しておらず、実行者がボイスチャンネルにいる場合 接続処理
-      joinVoiceChannel({
+      const voiceConnection = joinVoiceChannel({
         guildId: guild.id,
         channelId: channel.id,
         adapterCreator: guild.voiceAdapterCreator,
         selfMute: false,
       });
+      voiceConnection.on("error", (e) => console.error(`voice connection error (guild: ${guild.id}):`, e));
       await interaction.reply(`:partying_face: **${channel.name}** に参加しました！`);
       // ギルドデータに接続済ボイスチャンネルidをセット
       guildData.set(guild.id, { channel: interaction.channelId });

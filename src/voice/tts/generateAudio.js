@@ -79,9 +79,7 @@ module.exports = async function readMessages(messageContent, userId) {
 
     log("executed: rpcVoiceVox.post(synthesis)");
 
-    // fs.writeFileSync(filePath, new Buffer.from(synthesis.data), "binary");
-    // return filePath;
-    const auidioResource = createAudioResource(Readable.from(synthesis.data));
+    const auidioResource = createAudioResource(Readable.from(synthesis.data, { objectMode: false }));
     log("executed: createAudioResource(voiceVox)");
     return auidioResource;
   }
@@ -107,8 +105,7 @@ module.exports = async function readMessages(messageContent, userId) {
 
     log("executed: rpcAivis.post(synthesis)");
 
-    createAudioResource(Readable.from(synthesis.data));
-    const auidioResource = createAudioResource(Readable.from(synthesis.data));
+    const auidioResource = createAudioResource(Readable.from(synthesis.data, { objectMode: false }));
     log("executed: createAudioResource(aivis)");
     return auidioResource;
   }

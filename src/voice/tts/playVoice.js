@@ -23,6 +23,7 @@ module.exports = async function play(audioResource, guildId) {
     log(`executed: lock(${id})`);
     const connection = getVoiceConnection(guildId);
     if (!connection) { return log("no connection"); }
+    log(`connection.state.status = ${connection.state.status}`);
 
     let player = null;
 
@@ -39,14 +40,29 @@ module.exports = async function play(audioResource, guildId) {
         },
       });
       log("executed: createAudioPlayer");
+
+      player.on("error", (error) => {
+        console.error(`AudioPlayer error (guild: ${guildId}):`, error);
+      });
+      player.on("stateChange", (oldState, newState) => {
+        log(`player stateChange (guild: ${guildId}): ${oldState.status} -> ${newState.status}`);
+      });
+      connection.on("stateChange", (oldState, newState) => {
+        log(`connection stateChange (guild: ${guildId}): ${oldState.status} -> ${newState.status}`);
+      });
+
       // プレイヤーがない場合は作成
-      connection.subscribe(player);
-      log("executed: connection.subscribe");
+      const subscription = connection.subscribe(player);
+      log(`executed: connection.subscribe (success: ${Boolean(subscription)})`);
       // Mapにプレイヤーをセット
       guildData.set(guildId, { player });
 
       log(`executed: guildData.set(${guildId})`);
     }
+
+    audioResource.playStream.on("error", (error) => {
+      console.error(`AudioResource stream error (guild: ${guildId}):`, error);
+    });
 
     player.play(audioResource);
     log("executed: player.play");
